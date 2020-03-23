@@ -373,8 +373,11 @@ quinto_carro <- mtcars$mpg[5]
 
 if(quinto_carro > 20){
     print("o carro é econômico!")
-}else{print("o carro é beberrão...")}
+    } else{
+        print("o carro é beberrão...")
+}
 ```
+
 
 
 
