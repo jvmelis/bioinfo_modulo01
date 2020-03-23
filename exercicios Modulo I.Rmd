@@ -279,6 +279,29 @@ Intervalos também podem ser utilizados. Por exemplo, extraindo as 6 primeiras l
 tabela[1:6, 3:5]
 ```
 
+Se deixarmos o argumento de linha ou de coluna em branco, todas as linhas ou colunas vão ser disponibilizadas. Por exemplo:
+
+**a)** Deixando o argumento de **linhas** em branco, selecionando a **coluna** 3:
+
+```{r}
+tabela[,3]
+```
+
+**b)** Deixando o argumento de **colunas** em branco, selecionando a **linha** 3:
+
+```{r}
+tabela[3,]
+```
+
+
+
+Em um data.frame também podemos isolar colunas usando `$`, desta maneira:
+
+```{r}
+tabela$Coluna_A
+```
+
+
 ### Usando indexação e operadores lógicos
 
 Podemos mesclar o conhecimento sobre indexação e o uso de operadores lógicos para selecionar somente uma parte de uma tabela. Para esse exemplo, utilizaremos os dados de `mtcars`, que podem ser obtidos diretamente no R usando a **função** `data()`. Dessa maneira:
@@ -296,9 +319,44 @@ head(mtcars)
 No caso desta tabela, cada linha tem um nome e referem-se aos nomes dos modelos de carros avaliados. Para ver mais informações sobre esses dados, você pode usar o comando `?mtcars` em seu console, ou ir até esse [link](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) (em inglês).
 
 
+Se realizarmos um teste com operador lógico, observaremos como resposta uma série de `TRUE` ou `FALSE`. Veja o exemplo a seguir, para sabermos se existem carros com 6 cilindros (`cyl == 6`):
 
+
+```{r}
+mtcars$cyl == 6
+```
+
+Desta maneira, podemos extrair essa sequência (vetor) de valores lógicos (`TRUE`/`FALSE`) para um novo objeto chamado `carros_6cyl`:
+
+```{r}
+carros_6cyl <- mtcars$cyl == 6
+```
+
+E com esse vetor, utilizar para selecionar as linhas da tabela que seguem (com resposta igual a `TRUE`) o operador lógico executado (`mtcars$cyl == 6`):
+
+```{r}
+mtcars[carros_6cyl,]
+```
+
+Ou simplesmente podemos sintetizar esses comandos em um só (sem a construção do objeto `carros_6cyl`):
+
+```{r}
+mtcars[mtcars$cyl == 6, ]
+```
+
+        Não se esqueça que em data.frame existe a vírgula (`,`) para separar linha e coluna!
 
 ### Criando uma função
+
+Lembre-se **sempre** que trabalhos repetitivos devem ser realizados pelo computador! Por isso, criar funções é muito importante para quem trabalha com bioinformática. Criar uma função é estabelecer um algoritmo criado por você! Então, veja como podemos construir um algoritmo e aplicá-lo com uma função.
+
+Vamos supor que você queira calcular a área de um retangulo, que é simplesmente a multiplicação dos valores da base e da altura desse retângulo. Veja a figura abaixo sobre paralelogramas (Fonte: [Wikipedia](https://pt.wikipedia.org/wiki/Ficheiro:%C3%81rea_dos_Paralelogramos.png) )
+
+![Figura 1 - Área dos Paralelogramas](https://upload.wikimedia.org/wikipedia/commons/0/03/%C3%81rea_dos_Paralelogramos.png)
+
+
+
+
 
 
 ## Exercícios
@@ -308,31 +366,32 @@ Fazer a Fórmula de Bhaskara segundo comando no R
 
 ### Exercicio 2.
 
-#### a. data(mtcars)
+#### a. `data(mtcars)`
 
 #### b. veja quais carros tem:
 
-b.1) hp < 100
+b.1) `hp < 100`
 
-b.2) am = 1 (automatico)
+b.2) `am = 1` (automatico)
 
-b.3) mpg > 20 & am = 0
+b.3) `mpg > 20 & am == 0`
 
-#### c. Usando $, [] e :
+#### c. Usando `$`, `[]` e `:`
 
-c.1) Veja entre as linhas 11 e 22 do df
+c.1) Veja entre as linhas `11` e `22` do df
 
-c.2) veja entre as colunas 2 e 5 do df
+c.2) veja entre as colunas `2` e `5` do df
 
-c.3) Extraia os três primeiros valores da coluna qsec
+c.3) Extraia os três primeiros valores da coluna `qsec`
 
-c.4) Organize a tabela com o mpg maior para o menor, usando a função sort(). Use ? para ajudar
+c.4) Organize a tabela com o mpg maior para o menor, usando a função `sort()`. Use `?` para ajudar
 
 ### Exercicio 3.
 
 Construa uma função que execute a formula de Bhaskara (exercicio 1).
 
 ### Exercicio 4.
+
 Construa um grafico entre mpg e hp
 
 #### a. x <- mpg
