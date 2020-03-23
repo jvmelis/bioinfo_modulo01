@@ -346,17 +346,110 @@ mtcars[mtcars$cyl == 6, ]
 
         Não se esqueça que em data.frame existe a vírgula (`,`) para separar linha e coluna!
 
+### Usando algoritmos com expressões lógicas
+
+Na programação é muito importante o uso de expressões lógicas para a realização de algumas tarefas. A estrutura das expressões lógicas é basicamente **SE** um fato ocorrer **ENTÃO** fazer determinada ação. No R, utilizamos o `if` para isso. Veja o exemplo abaixo. 
+
+Utilizaremos o consumo (`mpg`) do primeiro carro dos dados `mtcars` (chamaremos de `primeiro_carro`) e pediremos para que imprima (função `print()`) caso o carro seja considerado `"o carro é econômico!"`. Ou seja, se `mpg > 20` resultar em `TRUE`, ele imprimirá no console do R o resultado `"o carro é econômico"`. A estrutura básica dessa expressão é: 
+
+**SE** (`if`) `primeiro_carro` (`mpg` do primeiro carro) for maior que `20` (`mpg > 20`) **ENTÃO** (utilizamos `{}`) imprima (`print()`) `"o carro é econômico!"`. Veja como fica o código: 
+
+
+```{r}
+primeiro_carro <- mtcars$mpg[1]
+
+if(primeiro_carro > 20){
+    print("o carro é econômico!")
+}
+```
+
+Sim! `"o carro é econômico!"`, pois ele consome 1 galão para percorrer mais do que 20 milhas (`mtcars$mpg > 20`).
+
+Porém, nesse tipo de expressão lógica, ainda falta o **SENÃO**, ou seja, caso a expressão lógica não resulte em `TRUE`, mas resulte em `FALSE`. Para isso, utilizamos a expressão `else`. Veja como fica o código e a aplicação no `quinto_carro`:
+
+
+```{r}
+quinto_carro <- mtcars$mpg[5]
+
+if(quinto_carro > 20){
+    print("o carro é econômico!")
+}else{print("o carro é beberrão...")}
+```
+
+
+
+### Iterações (Loops)
+
+Outro aspecto importante para quem trabalha com programação é o uso de loopings (iterações). Para isso, utilizaremos a ferramenta `for`.
+
+
+
 ### Criando uma função
 
-Lembre-se **sempre** que trabalhos repetitivos devem ser realizados pelo computador! Por isso, criar funções é muito importante para quem trabalha com bioinformática. Criar uma função é estabelecer um algoritmo criado por você! Então, veja como podemos construir um algoritmo e aplicá-lo com uma função.
+Por último, lembre-se **sempre** que trabalhos repetitivos devem ser realizados pelo computador! Por isso, criar funções é muito importante para quem trabalha com bioinformática. Criar uma função é estabelecer um algoritmo criado por você! Então, veja como podemos construir um algoritmo e aplicá-lo com uma função.
 
 Vamos supor que você queira calcular a área de um retangulo, que é simplesmente a multiplicação dos valores da base e da altura desse retângulo. Veja a figura abaixo sobre paralelogramas (Fonte: [Wikipedia](https://pt.wikipedia.org/wiki/Ficheiro:%C3%81rea_dos_Paralelogramos.png) )
 
 ![Figura 1 - Área dos Paralelogramas](https://upload.wikimedia.org/wikipedia/commons/0/03/%C3%81rea_dos_Paralelogramos.png)
 
 
+Como pode ver, para o cálculo da área ($A$) devemos realizar a multiplicação do comprimento da base ($b$) e da altura ($h$):
+
+$$A = b.h$$
+
+Se fossemos calcular a área (`A`) de um retângulo com base (`b`) igual a 2 e altura (`h`) igual a 3, poderíamos realizar o seguinte algoritmo:
+
+```{r}
+b <- 2
+h <- 3
+A <- b*h
+A
+```
+
+Ou poderíamos construir uma função em que nos retornaria o valor da área de um retângulo, logo após inserirmos dois valores na função. Veja como construir tal função:
+ Para isso, utilizaremos a função `function()` e devemos descrever quais **argumentos** deverão ser utilizadas pela função. No nosso caso, os argumentos são base (`b`) e altura (`h`). Para descrever como é o algoritmo, abra e feche as linhas de comando com chaves (`{}`).
+ Veja a construção da função `calcular_area` utilizando o algoritmo para o cálculo da área de um retângulo:
+ 
+```{r}
+calcular_area <- function(b, h){
+    Area = b*h
+}
+```
+
+Podemos ver agora a sua aplicação, com um retângulo que tem base (`b`) igual a `4` e altura (`h`) igual `3`:
 
 
+```{r}
+area <- calcular_area(b = 4, h = 3)
+area
+```
+ 
+Na maneira que fizemos a função, ela não nos retorna um valor de forma automática. Veja abaixo:
+
+```{r}
+calcular_area(b = 4, h = 3)
+```
+
+Por isso, é melhor reescrever a função utilizando um comando (função) para nos retornar o valor de `A`, utilizando `return()`:
+
+
+```{r}
+calcular_area <- function(b, h){
+    Area = b*h
+    return(Area)
+}
+```
+
+Desta maneira, a função `calcular_area` vai nos retornar automaticamente o valor da nossa área (`A`):
+
+```{r}
+calcular_area(b = 4, h = 3)
+```
+
+
+        Importante notar que os objetos criados dentro da função não ficam no ambiente do R (não existe o objeto `Area`, por exemplo).
+
+### Mesclando funções, iterações e expressões lógicas
 
 
 ## Exercícios
