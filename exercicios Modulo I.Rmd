@@ -189,13 +189,39 @@ O interessante é que cada coluna mantém a sua classe dentro de um data.frame. 
 
 ```{r}
 str(dados)
+```
+
+Com `str()` vemos que são duas colunas, uma intitulada `vetor_a` da classe `numerical` (podemos ver com a descrição `num`) e outra chamada `vetor_c` da classe `logical` (podemos ver `logi`). 
+
+```{r}
 summary(dados)
 ```
+
+Com `summary()` vemos que são duas colunas, uma intitulada `vetor_a` com os seguintes valores:
+    
+    Valor Mínimo (`Min.`) igual a `3.142` 
+    Primeiro quartil (`1st Qu.`) igual a `14.660`
+    Mediana (`Median`) igual a `20.250`
+    Média (`Mean`) igual a `21.941`
+    Terceiro Quartil (`3rd Qu.`) igual a `27.531`
+    Valor Máximo (`Max.`) igual a `44.123`
+
+A segunda coluna intitulada `vetor_c` vemos que é uma coluna com valores lógicos (`Mode: logical`), contabilizando quantos valores de `TRUE` e `FALSE` existem (2, respectivamente).
+
+Na hora de construirmos um data.frame, também podemos colocar nomes diferentes das colunas, desta maneira:
+
+```{r}
+dados <- data.frame(Numeros = vetor_a, 
+                    Logico = vetor_c)
+dados
+```
+
 
 
 ### Usando indexação
 
 Os dois principais objetos que usaremos para a indexação serão vetores e tabelas (`data.frame`). Para a indexação utiliza-se os colchetes (`[]`) e numeração para visualizarmos e/ou extrairmos os valores presentes nesses objetos. No R, o primeiro valor de um vetor é extraído usando o nome do vetor seguido por `[1]`. Caso fosse o segundo valor, usamos `[2]`, e assim por diante. Exemplo:
+
 
 ```{r}
 vetor_letras <- c("primeiro", "segundo", "terceiro", "quarto", "quinto")
@@ -203,11 +229,19 @@ vetor_letras
 vetor_letras[1]
 vetor_letras[2]
 ```
-
 Se quisermos extrair mais do que um valor, podemos utilizar um vetor de números ou uma sequência para extraí-los. Por exemplo, para extrairmos os valores `"primeiro"`, `"terceiro"` e `"quinto"`, utilizamos o vetor de numeros `c(1,3,5)` dentro dos colchetes, desta maneira:
+
+
 
 ```{r}
 vetor_letras[c(1,3,5)]
+```
+
+
+Valores lógicos (`TRUE` e `FALSE`, ou `T` e `F`) também podem ser utilizados:
+
+```{r}
+vetor_letras[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
 ```
 
 Ou se quisermos extrairmos os valores entre `"segundo"` ao `"quarto"`, podemos fazer uma sequência entre 2 e 4, utilizando `2:4` (lê-se: sequência de numeros inteiros entre 2 e 4, espaçados por 1), desta maneira:
@@ -216,8 +250,52 @@ Ou se quisermos extrairmos os valores entre `"segundo"` ao `"quarto"`, podemos f
 vetor_letras[c(2:4)]
 ```
 
+No caso de tabelas, temos duas dimensões: linhas e colunas. Dessa maneira, quando extraimos o valor presente na linha `2` coluna `3`, devemos utilizar `[2,3]`, sendo o primeiro valor referente a linha da tabela e o segundo valor, após a vírgula, referente a coluna.
+Veja exemplo:
 
-No caso de tabelas, temos duas dimensões: linhas e colunas. Além disso, quando extraimos
+- 1o Criar um data.frame composto por sequências de números:
+
+```{r}
+tabela <- data.frame(Coluna_A = 1:20,
+                     Coluna_B = 21:40,
+                     Coluna_C = 41:60,
+                     Coluna_D = 61:80,
+                     Coluna_E = 81:100)
+tabela
+```
+ 
+ Lembrando que usando `:` construimos uma sequência de números no intervalo descrito, e para colocar os nomes das colunas, basta colocar o nome da coluna e `=`, como construído acima.
+
+- 2o Extrair o valor requerido (2a linha, 3a coluna):
+
+```{r}
+tabela[2,3]
+```
+
+Intervalos também podem ser utilizados. Por exemplo, extraindo as 6 primeiras linhas (`1` a `6`) e entre as colunas `3` e `5`.
+
+
+```{r}
+tabela[1:6, 3:5]
+```
+
+### Usando indexação e operadores lógicos
+
+Podemos mesclar o conhecimento sobre indexação e o uso de operadores lógicos para selecionar somente uma parte de uma tabela. Para esse exemplo, utilizaremos os dados de `mtcars`, que podem ser obtidos diretamente no R usando a **função** `data()`. Dessa maneira:
+
+```{r}
+data("mtcars")
+```
+
+Podemos visualizar as primeiras 6 linhas dessa tabela usando a função `head()`:
+
+```{r}
+head(mtcars)
+```
+
+No caso desta tabela, cada linha tem um nome e referem-se aos nomes dos modelos de carros avaliados. Para ver mais informações sobre esses dados, você pode usar o comando `?mtcars` em seu console, ou ir até esse [link](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) (em inglês).
+
+
 
 
 ### Criando uma função
