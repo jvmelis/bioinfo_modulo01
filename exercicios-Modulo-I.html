@@ -651,12 +651,82 @@ if(primeiro_carro &gt; 20){
 
 if(quinto_carro &gt; 20){
     print(&quot;o carro é econômico!&quot;)
-}else{print(&quot;o carro é beberrão...&quot;)}</code></pre>
+    } else{
+        print(&quot;o carro é beberrão...&quot;)
+}</code></pre>
 <pre><code>## [1] &quot;o carro é beberrão...&quot;</code></pre>
 </div>
 <div id="iterações-loops" class="section level3">
 <h3>Iterações (Loops)</h3>
-<p>Outro aspecto importante para quem trabalha com programação é o uso de loopings (iterações). Para isso, utilizaremos a ferramenta <code>for</code>.</p>
+<p>Outro aspecto importante para quem trabalha com programação é o uso de loopings (iterações). Para isso, utilizaremos a ferramenta <code>for()</code>. Essa ferramenta é útil para que seja utilizado um determinado algoritmo <strong>POR</strong> <code>n</code> vezes. Veja o exemplo abaixo:</p>
+<p>Utilizaremos o algoritmo de imprimir (<code>print()</code>) os números que estão presentes no intervalo entre <code>1</code> a <code>20</code>. Por isso, queremos que o algoritmo <code>print(i)</code> seja realizado <code>20</code> vezes, sendo que <code>i</code> é um número que está presente em (<code>in</code>) um intervalo entre <code>1</code> a <code>20</code> (<code>1:20</code>).</p>
+<pre class="r"><code>for(i in 1:20){
+    print(i)
+}</code></pre>
+<pre><code>## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5
+## [1] 6
+## [1] 7
+## [1] 8
+## [1] 9
+## [1] 10
+## [1] 11
+## [1] 12
+## [1] 13
+## [1] 14
+## [1] 15
+## [1] 16
+## [1] 17
+## [1] 18
+## [1] 19
+## [1] 20</code></pre>
+<p>No tópico anterior, com o uso de <code>if</code> e <code>else</code>, aplicamos um algoritmo (<strong>SE</strong> o carro consume pouco <strong>ENTÃO</strong> imprimir <code>&quot;o carro é econômico&quot;</code> <strong>SENÃO</strong> imprimir <code>&quot;o carro é beberrão&quot;</code>) para um carro. Mas se quisermos automatizar esse algoritmo e rodar esse algoritmo <strong>PARA</strong> todo o conjunto de carros, utilizaremos uma iteração (loop) utilizando a função <code>for</code>. Veja a resolução:</p>
+<pre class="r"><code>consumo_todos_carros &lt;- mtcars$mpg
+total &lt;- length(consumo_todos_carros)
+
+for(i in 1:total){
+    if(consumo_todos_carros[i] &gt; 20){
+    print(&quot;o carro é econômico!&quot;)
+    } else{
+        print(&quot;o carro é beberrão...&quot;)
+        }
+}</code></pre>
+<pre><code>## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é econômico!&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é beberrão...&quot;
+## [1] &quot;o carro é econômico!&quot;</code></pre>
+<p>Entenda o que foi realizado: 1. Primeiramente extraímos os valores</p>
 </div>
 <div id="criando-uma-função" class="section level3">
 <h3>Criando uma função</h3>

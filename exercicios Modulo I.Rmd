@@ -13,13 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Esse documento tem como objetivo mostrar alguns tutoriais e exercícios que devem ser feitos por você. Você pode realizar os tutoriais que se encontram aqui nesse documento em seu próprio computador utilizando o RStudio. Ao final, encontram-se exercícios que devem ser realizados por você, colocando as linhas de comando em um script (arquivo com extensão .r) e enviar para mim no e-mail jvmelis@gmail.com
 
-
 As partes que estão em janelas são aquelas que podem ser repetidas em seu console. Exemplo: 
 
 ```{r results='hide'}
 print("Hello!")
 ```
-
 
 E aqeulas janelas que começam com `##` são aquelas que resultam do comando escrito na última janela mostrada anteriormente. Exemplo (*output* de `print("Hello!")`):
 
@@ -27,14 +25,13 @@ E aqeulas janelas que começam com `##` são aquelas que resultam do comando esc
 print("Hello!")
 ```
 
-
 ## Tutoriais
 
 Nos exercícios que fizemos até agora, vocês utilizaram alguns operadores. Para relembrá-los, mostrarei cada um:
 
-### Conceitos básicos
+## Conceitos básicos
 
-**Operadores Matemáticos**: São aqueles utilizados para realizar as operações matemáticas mais simples, como soma (`+`), subtração (`-`), multiplicação (`*`) e divisão (`/`). Podemos também incluir a exponenciação (`^`) nesse conjunto. A seguir, temos alguns exemplos de uso:
+**Operadores Matemáticos**: São aqueles utilizados para realizar as operações matemáticas mais simples, como soma (`+`), subtração (`-`), multiplicação (`*`) e divisão (`/`). Podemos também incluir a exponenciação (`^`) nesse conjunto e o cálculo da raiz quadrada (`sqrt()` do termo em inglês *square root*). A seguir, temos alguns exemplos de uso:
 
 ```{r}
 23 + 45
@@ -44,6 +41,10 @@ Nos exercícios que fizemos até agora, vocês utilizaram alguns operadores. Par
 12 * 5
 
 15 / 3 
+
+3 ^ 3
+
+sqrt(16)
 ```
 
 **Criar variáveis**
@@ -61,7 +62,7 @@ Importante lembrar que o nome das variáveis **DEVEM**:
  
 Quanto aos valores, eles podem ser um único valor (0 dimensões), um `vector` (1 dimensão: 1 x n), um `data.frame` (2 dimensões:  n linhas e m colunas, sendo que todas as colunas devem ter o mesmo número de linhas), além de `array` (mais do que duas dimensões) e `list` (objetos que podem ter elementos de diferentes tipos: `data.frame`, `vector`, valores, `array`, etc).
 
-- Atribuindo um valor a uma variável:
+#### - Atribuindo um valor a uma variável:
 
 ```{r}
 a <- 18.5
@@ -92,7 +93,6 @@ class(c)
 class(d)
 ```
 
-
 Para construir um objeto `character` basta usar aspas (""). Se não forem utilizadas as aspas, o R entenderá que você quer atribuir um objeto/variável a outro objeto/variável (que não existe) ou descrevendo um símbolo não esperado (como um espaço, símbolo ou letra acentuada). Um objeto da classe `character` pode realizar algumas ações, mas logicamente que ações que incluam cálculos não poderão ser realizadas. Veja no seu console os resultados dos comandos a seguir para que você visualize:
 
 Erro com objeto não encontrado:
@@ -101,20 +101,17 @@ Erro com objeto não encontrado:
 c <- valor
 ```
 
-
 Erro com símbolo inesperado:
 
 ```{r, eval=F}
 c <- valor nao esperado
 ```
 
-
 Erro com argumento não-numérico:
 
 ```{r, eval=F}
 2*c
 ```
-
 
 Já um objeto lógico pode apresentar dois tipos de valores `TRUE` e `FALSE`. Esse é o objeto mais simples, pois só pode ser um valor ou outro, sendo que numericamente os valores lógicos podem ser: `TRUE` = `1` e `FALSE` = `0`. Portanto, podemos fazer a soma de dois ou mais valores lógicos:
 
@@ -140,7 +137,13 @@ Os valores lógicos podem ser respostas a operadores lógicos, sendo eles: `==` 
 1<=2
 ```
 
-- Construindo um `vector`:
+### Exercicio 1.
+
+#### a) Construa a [Fórmula de Bhaskara](https://brasilescola.uol.com.br/matematica/formula-bhaskara.htm) segundo comando no R. Faça duas vezes, pois em uma você utilizará  `+` e em outra `-`
+
+#### b) estabeleça os seguintes valores para seu cálculo: `a = 1`,`b = 12`,`c = -13`.
+
+#### - Construindo um `vector`:
 
 Para construir uma sequência de valores que sejam atribuídos a uma única variável/objeto, use a função `c()` (de *combine*), colocando os valores separados por uma vírgula (`,`). Exemplos:
 
@@ -167,10 +170,13 @@ vetor_misto <- c("zero", 1, 2, 3)
 class(vetor_misto)
 ```
 
-A hierarquia no R é: `logical` < `integer` < `numeric` < `character`.
+A hierarquia no R é: 
+        
+        `logical` < `integer` < `numeric` < `character`. 
 
+Ou seja, um valor `logical` ao ser gravado com números inteiros (`integer`) será modificado para `integer` (`TRUE` para `1` e `FALSE` para `0`); um número inteiro é modificado para `numeric`; um número será modificado para `character` se for salvo com outros valores `character` (`1` para `"1"`).
 
-- Construindo um `data.frame`
+#### - Construindo um `data.frame`
 
 Um data.frame é uma tabela de `n` x `m` (`n` linhas e `m` colunas), sendo que todas as `m` colunas devem ter o mesmo tamanho. Para construir um data.frame, basta usar a função `data.frame()`, juntando dois ou mais vetores. Exemplo:
 
@@ -216,9 +222,7 @@ dados <- data.frame(Numeros = vetor_a,
 dados
 ```
 
-
-
-### Usando indexação
+## Usando indexação
 
 Os dois principais objetos que usaremos para a indexação serão vetores e tabelas (`data.frame`). Para a indexação utiliza-se os colchetes (`[]`) e numeração para visualizarmos e/ou extrairmos os valores presentes nesses objetos. No R, o primeiro valor de um vetor é extraído usando o nome do vetor seguido por `[1]`. Caso fosse o segundo valor, usamos `[2]`, e assim por diante. Exemplo:
 
@@ -231,12 +235,9 @@ vetor_letras[2]
 ```
 Se quisermos extrair mais do que um valor, podemos utilizar um vetor de números ou uma sequência para extraí-los. Por exemplo, para extrairmos os valores `"primeiro"`, `"terceiro"` e `"quinto"`, utilizamos o vetor de numeros `c(1,3,5)` dentro dos colchetes, desta maneira:
 
-
-
 ```{r}
 vetor_letras[c(1,3,5)]
 ```
-
 
 Valores lógicos (`TRUE` e `FALSE`, ou `T` e `F`) também podem ser utilizados:
 
@@ -293,16 +294,13 @@ tabela[,3]
 tabela[3,]
 ```
 
-
-
 Em um data.frame também podemos isolar colunas usando `$`, desta maneira:
 
 ```{r}
 tabela$Coluna_A
 ```
 
-
-### Usando indexação e operadores lógicos
+## Usando indexação e operadores lógicos
 
 Podemos mesclar o conhecimento sobre indexação e o uso de operadores lógicos para selecionar somente uma parte de uma tabela. Para esse exemplo, utilizaremos os dados de `mtcars`, que podem ser obtidos diretamente no R usando a **função** `data()`. Dessa maneira:
 
@@ -318,9 +316,7 @@ head(mtcars)
 
 No caso desta tabela, cada linha tem um nome e referem-se aos nomes dos modelos de carros avaliados. Para ver mais informações sobre esses dados, você pode usar o comando `?mtcars` em seu console, ou ir até esse [link](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) (em inglês).
 
-
 Se realizarmos um teste com operador lógico, observaremos como resposta uma série de `TRUE` ou `FALSE`. Veja o exemplo a seguir, para sabermos se existem carros com 6 cilindros (`cyl == 6`):
-
 
 ```{r}
 mtcars$cyl == 6
@@ -346,7 +342,25 @@ mtcars[mtcars$cyl == 6, ]
 
         Não se esqueça que em data.frame existe a vírgula (`,`) para separar linha e coluna!
 
-### Usando algoritmos com expressões lógicas
+### Exercício 2.
+
+#### a) Utilizando `[]`, veja entre as colunas `2` e `5` do data.frame `mtcars`
+
+#### b) Utilizando `:`, veja entre as linhas `11` e `22` do data.frame `mtcars`
+
+#### c) Utilizando `$`, extraia os três primeiros valores da coluna `qsec` do data.frame `mtcars`
+
+### Exercicio 3.
+
+#### a) Com o data.frame `mtcars`, veja quais carros tem `hp` menor do que `100`.
+
+#### c) Com o data.frame `mtcars`, veja quais carros tem o câmbio automático (`am = 1`).
+
+#### d) Com o data.frame `mtcars`, veja quais carros tem `mpg` e (utilize `&`) câmbio manual (`am = 0`)
+
+#### e) Organize o data.frame `mtcars` a partir de `mpg`, mostrando os valores com maior `mpg` para aqueles com menor `mpg`. Para isso, utilize a função `order()`. Use `?` para ajudar a responder.
+
+## Usando algoritmos com expressões lógicas
 
 Na programação é muito importante o uso de expressões lógicas para a realização de algumas tarefas. A estrutura das expressões lógicas é basicamente **SE** um fato ocorrer **ENTÃO** fazer determinada ação. No R, utilizamos o `if` para isso. Veja o exemplo abaixo. 
 
@@ -367,7 +381,6 @@ Sim! `"o carro é econômico!"`, pois ele consome 1 galão para percorrer mais d
 
 Porém, nesse tipo de expressão lógica, ainda falta o **SENÃO**, ou seja, caso a expressão lógica não resulte em `TRUE`, mas resulte em `FALSE`. Para isso, utilizamos a expressão `else`. Veja como fica o código e a aplicação no `quinto_carro`:
 
-
 ```{r}
 quinto_carro <- mtcars$mpg[5]
 
@@ -378,16 +391,47 @@ if(quinto_carro > 20){
 }
 ```
 
+## Iterações (Loops)
 
+Outro aspecto importante para quem trabalha com programação é o uso de loopings (iterações). Para isso, utilizaremos a ferramenta `for()`. Essa ferramenta é útil para que seja utilizado um determinado algoritmo **POR** `n` vezes. Veja o exemplo abaixo:
 
+Utilizaremos o algoritmo de imprimir (`print()`) os números que estão presentes no intervalo entre `1` a `20`. Por isso, queremos que o algoritmo `print(i)` seja realizado `20` vezes, sendo que `i` é um número que está presente em (`in`) um intervalo entre `1` a `20` (`1:20`).
 
-### Iterações (Loops)
+```{r}
+for(i in 1:20){
+    print(i)
+}
+```
 
-Outro aspecto importante para quem trabalha com programação é o uso de loopings (iterações). Para isso, utilizaremos a ferramenta `for`.
+No tópico anterior, com o uso de `if` e `else`, aplicamos um algoritmo (**SE** o carro consume pouco **ENTÃO** imprimir `"o carro é econômico"` **SENÃO** imprimir `"o carro é beberrão"`) para um carro. Mas se quisermos automatizar esse algoritmo e rodar esse algoritmo **PARA** todo o conjunto de carros, utilizaremos uma iteração (loop) utilizando a função `for`. Veja a resolução:
 
+```{r}
+consumo_todos_carros <- mtcars$mpg
+total_de_carros <- length(consumo_todos_carros)
 
+for(i in 1:total_de_carros){
+    if(consumo_todos_carros[i] > 20){
+    print("o carro é econômico!")
+    } else{
+        print("o carro é beberrão...")
+        }
+}
+```
 
-### Criando uma função
+Entenda o que foi realizado:
+1. Primeiramente extraímos os valores de `mpg` do data.frame `mtcars`, atribuindo a um objeto chamado `consumo_todos_carros`;
+2. Depois extraímos o total de carros presentes nessa tabela. No caso, é o comprimento (`length()`) do vetor `consumo_todos_carros`.
+3. Construímos a iteração, onde todos os valores presentes em `consumo_todos_carros` serão analisados um a um (`i` que vai de 1 ao número `total_de_carros`), realizando o algoritmo com expressões lógicas.
+
+### Exercício 4.
+
+#### a) Construa uma iteração, avaliando com um algoritmo com expressão lógica, a coluna `am`, onde o teste a ser realizado é: se `am == 0`, logo imprimir `"câmbio automático"`, caso contrário `"câmbio manual"`.
+
+#### b) Salve o resultado da iteração realizada em objeto chamado `resultado`.
+
+#### c) Utilize a função `summary()` e responda quantos carros tem câmbio automático e quantos tem câmbio manual no data.frame `mtcars`.
+
+## Criando uma função
 
 Por último, lembre-se **sempre** que trabalhos repetitivos devem ser realizados pelo computador! Por isso, criar funções é muito importante para quem trabalha com bioinformática. Criar uma função é estabelecer um algoritmo criado por você! Então, veja como podemos construir um algoritmo e aplicá-lo com uma função.
 
@@ -449,63 +493,69 @@ Desta maneira, a função `calcular_area` vai nos retornar automaticamente o val
 calcular_area(b = 4, h = 3)
 ```
 
+Importante notar que os objetos criados dentro da função não ficam no ambiente do R (não existe o objeto `Area`, por exemplo).
 
-        Importante notar que os objetos criados dentro da função não ficam no ambiente do R (não existe o objeto `Area`, por exemplo).
+Você pode ver quais são os argumentos presentes em uma função com a função `args()`
 
-### Mesclando funções, iterações e expressões lógicas
+```{r}
+args(calcular_area)
+```
 
 
-## Exercícios
+### Exercício 5. 
 
-### Exercicio 1.
-Fazer a Fórmula de Bhaskara segundo comando no R
+#### a) Construa uma função que calcule a média aritimética de um vetor de números.
 
-### Exercicio 2.
+#### b) Testar com o seguinte vetor de números `vetor_com_NA <- c(2, 2, 2, NA)`
 
-#### a. `data(mtcars)`
+#### c) Execute o mesmo teste, mas dessa vez, ao invés de usar a sua própria função, utilize: `mean(vetor_com_NA, na.rm = TRUE)`. Compare os resultados. Os valores são iguais ou não? Por quê?
 
-#### b. veja quais carros tem:
+No exercício anterior, apresentei pela primeira vez o valor chamado `NA`. Esse valor é um símbolo para valores *não disponíveis* (*Not Available*). Além de `NA`, também existe o `NaN`, que se refere a *Not a Number*, que são valores impossiveis, como a raiz quadrada de um número negativo:
 
-b.1) `hp < 100`
+```{r}
+sqrt(-1)
+```
 
-b.2) `am = 1` (automatico)
+Outros valores que podem aparecer também são `Inf` ou `-Inf`, referentes a valores infinitos, e `NULL`, que refere-se a valores vazios (*nulo*). Exemplos:
 
-b.3) `mpg > 20 & am == 0`
+```{r}
+vetor_vazio <- c()
+vetor_vazio
+-pi/0
+pi/0
+```
 
-#### c. Usando `$`, `[]` e `:`
+## Funções mais complexas (mesclando iterações, expressões lógicas e outras coisas)
 
-c.1) Veja entre as linhas `11` e `22` do df
 
-c.2) veja entre as colunas `2` e `5` do df
 
-c.3) Extraia os três primeiros valores da coluna `qsec`
 
-c.4) Organize a tabela com o mpg maior para o menor, usando a função `sort()`. Use `?` para ajudar
+### Exercicio 6.
 
-### Exercicio 3.
+Construa uma função que execute a formula de Bhaskara.
 
-Construa uma função que execute a formula de Bhaskara (exercicio 1).
+
+## Construindo gráficos
 
 ### Exercicio 4.
 
 Construa um grafico entre mpg e hp
 
-#### a. x <- mpg
+#### a) x <- mpg
 
-#### b. y <- hp
+#### b) y <- hp
 
-#### c. plot(x, y); plot(y ~ x)
+#### c) plot(x, y); plot(y ~ x)
 
-Exercicio 5. 
-a. Instalar o pacote tidyverse
-b. Ler os dados compilados de series/filmes
-c. Manipular para uma limpeza dos dados usando: mutate, as.logical, ifelse/case_when
-d. usar filter para filtrar filmes/series dos ultimos 5 anos, 10 anos e 20 anos
-e. usar select para selecionar duas colunas
-f. criar nova coluna com mutate chamada de antigos (series/filmes > 20 anos)
-g. Usar pipe (%>%)
-h. Usar summarize/group_by para verificar a mediana/media do ano filmes/series por aluno
-i. Usar arrange para ordenar os filmes/series
+### Exercicio 5. 
 
-data("mtcars")
-mtcars[order(mtcars$mpg, decreasing = F),] #se quiser colocar do menor para o maior usar decreasing=F
+#### a) Instalar o pacote tidyverse
+#### b) Ler os dados compilados de series/filmes
+#### c) Manipular para uma limpeza dos dados usando: mutate, as.logical, ifelse/case_when
+#### d) usar filter para filtrar filmes/series dos ultimos 5 anos, 10 anos e 20 anos
+#### e) usar select para selecionar duas colunas
+#### f) criar nova coluna com mutate chamada de antigos (series/filmes > 20 anos)
+#### g) Usar pipe (%>%)
+#### h) Usar summarize/group_by para verificar a mediana/media do ano filmes/series por aluno
+#### i) Usar arrange para ordenar os filmes/series
+
