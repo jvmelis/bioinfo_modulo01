@@ -9,6 +9,48 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## - Instalando pacotes
+
+Na primeira apostila você aprendeu como construir uma função, além de fundamentos básicos da programação em R. Mas como você percebeu, existem algoritmos (como calcular uma média, usando `mean()`, por exemplo) que já foram organizados em muitas funções.
+
+Nesse aspecto, o R ganha muitas funcionalidades pois uma gigantesca gama de pacotes e funções são propostas por muitos autores. Ao contrário do Python, o R ganha quanto a construção e disponibilização de pacotes.
+
+**Mas o que é um pacote, afinal?**
+
+Um pacote é formado por um conjunto de funções reutilizáveis, documentação que descrevem como podem ser utilizadas (`help()` ou `?`) e  conjunto de dados. Alguns desses pacotes podem apresentar *vignettes*, que são semelhantes a essa apostila: comentários, imagens e porções de R scripts que ensinam sobre alguma funcionalidade de um pacote.
+
+Um exemplo: [Carlson, 2020](https://doi.org/10.1111/2041-210X.13389) publicou um pacote chamado de `embarcadero` em que é possível fazer modelagem de distribuição de espécies com árvores de regressão aditiva bayesiana (*Bayesian additive regression trees* - BART). No artigo, aceito pela revista científica [Methods in Ecology and Evolution](https://besjournals.onlinelibrary.wiley.com/journal/2041210x), o autor ensina sobre o método empregado e ainda ensina a como reproduzí-lo com R. Dessa maneira, a Ciência se torna **reproduzível** e mais **robusta**.
+
+Quando apresentei o [RStudio](https://rstudio.com/) eu comentei que essa IDE facilitou muito a dinâmica de uso com o R. Também com o objetivo de facilitar a programação e agilizar processos em R, o grande pacote [tidyverse](https://www.tidyverse.org/) trouxe uma série de facilidades. O `tidyverse` é composto por vários outros pacotes menores
+
+Os pacotes precisam ser instalados e carregados. Para isso, você precisa executar a seguinte função para instalar um pacote:
+
+```{r eval=FALSE}
+install.packages("nome_do_pacote")`
+```
+
+Importante saber que: (1) o nome do pacote deve estar entre aspas e dentro dos parênteses; (2) Você deve ter uma conexão com a internet; (3) Na primeira que você instalar, TUDO (documentação, vignettes, funções e dados) será instalado no seu computador; (4) A forma que apresentei acima exemplifica um pacote que está disponível em sua versão estável e disponível no núcleo central do R, chamado de [CRAN](https://cran.r-project.org/) (*comprehensive R Archive Network*), mas pacotes também podem estar disponíveis em outros lugares, tais como [GitHub](https://github.com/) ou [Bioconductor](https://www.bioconductor.org/news/bioc_3_9_release/), que é voltado para Bioinformática. Nos dois últimos casos, a função para baixar e instalar um pacote presente nesses repositórios é usar:
+
+Usando repositório do Github:
+
+```{r eval=FALSE}
+devtools::install_github("usuario/nome_do_pacote")
+```
+
+Usando repositório do Bioconductor:
+
+```{r eval=FALSE}
+BiocManager::install("nome_do_pacote")
+```
+
+
+
+### Exercício 1.
+
+
+```{r include=FALSE, warning=FALSE}
+require(tidyverse)
+```
 
 
 ### Exercicio 5. 
