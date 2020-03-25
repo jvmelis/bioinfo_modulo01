@@ -1,0 +1,612 @@
+---
+title: "Módulo I - Apostila 01"
+author: "J van Melis"
+date: "25/03/2020"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(tinytex.verbose = TRUE)
+```
+# Módulo I - Introdução ao R
+
+Esse documento tem como objetivo mostrar alguns tutoriais e exercícios que devem ser feitos por você. Você pode realizar os tutoriais que se encontram aqui nesse documento em seu próprio computador utilizando o RStudio. Ao final, encontram-se exercícios que devem ser realizados por você, colocando as linhas de comando em um script (arquivo com extensão .r) e enviar para mim no e-mail jvmelis@gmail.com
+
+As partes que estão em janelas são aquelas que podem ser repetidas em seu console. Exemplo: 
+
+```{r results='hide'}
+print("Hello!")
+```
+
+E aqeulas janelas que começam com `##` são aquelas que resultam do comando escrito na última janela mostrada anteriormente. Exemplo (*output* de `print("Hello!")`):
+
+```{r echo = FALSE}
+print("Hello!")
+```
+
+## Tutoriais
+
+Nos exercícios que fizemos até agora, vocês utilizaram alguns operadores. Para relembrá-los, mostrarei cada um:
+
+## I. Conceitos básicos
+
+**Operadores Matemáticos**: São aqueles utilizados para realizar as operações matemáticas mais simples, como soma (`+`), subtração (`-`), multiplicação (`*`) e divisão (`/`). Podemos também incluir a exponenciação (`^`) nesse conjunto e o cálculo da raiz quadrada (`sqrt()` do termo em inglês *square root*). A seguir, temos alguns exemplos de uso:
+
+```{r}
+23 + 45
+
+105 - 81
+
+12 * 5
+
+15 / 3 
+
+3 ^ 3
+
+sqrt(16)
+```
+
+**Criar variáveis**
+Como o R também é uma linguagem orientada a objetos, é importante a criação de objetos. Como todo objeto, podemos montar objetos que tenham características e tamanhos diferentes. Os objetos podem ser variáveis e, para atribuirmos um valor a uma variável, podemos utilizar os símbolos `=` ou `<-`, sendo que aquilo que se encontra do lado esquerdo é a variável e do lado esquerdo o valor (ou conjunto de valores) a ser atribuído à variável. 
+
+Por exemplo: atribuir o valor numérico `2` a variável chamada `numero`:
+
+!```{r results='hide'}
+numero <- 2
+```
+
+Importante lembrar que o nome das variáveis **DEVEM**:
+ 
+    1. Começar com ao menos uma letra (Não podem começar com números ou símbolos)
+ 
+    2. Evite o uso de símbolos. Por exemplo: `#`, `@`, `!`,`$`, `%`, `&`, `*`, `+`, `-`,  `/`, `(`, `)`, além de acentos e espaços. Símbolo aceitável é `_`.
+ 
+    3. Prefira nomes de variáveis que signifiquem algo e que sejam mais *únicos*. Por exemplo: `DNA_ind235` (DNA do indivíduo 235) ao invés de `gen1` (seria gene ou genoma?) ou `dna` (de quem? Vai ter mais do que uma extração de DNA?).
+ 
+Quanto aos valores, eles podem ser um único valor (0 dimensões), um `vector` (1 dimensão: 1 x n), um `data.frame` (2 dimensões:  n linhas e m colunas, sendo que todas as colunas devem ter o mesmo número de linhas), além de `array` (mais do que duas dimensões) e `list` (objetos que podem ter elementos de diferentes tipos: `data.frame`, `vector`, valores, `array`, etc).
+
+#### - Atribuindo um valor a uma variável:
+
+```{r}
+a <- 18.5
+b <- 442L
+c <- "Qualquer letr@ ou $ímbolo"
+d <- TRUE
+```
+
+os valores são objetos que podem ter diferentes classes, as classes que construímos acima são de quatro tipos. Podemos ver as classes desses objetos usando a função `class()`:
+
+```{r}
+class(a)
+class(b)
+```
+
+A diferença das classes `numeric` e `integer` é que a segunda classe é para número inteiros. No R, para que um número inteiro seja reconhecido como tal, usa-se a letra maiúscula **L** ao final do número (neste caso `442L`). Lembrando que o R usa numeração "americana" (dígitos separados por `.` e não `,`).
+
+Ambos podem ser utilizados como valores numéricos em operações matemáticas:
+
+```{r}
+a*b
+```
+
+Os outros dois objetos não são numéricos, mas cada um tem sua peculiaridade:
+
+```{r}
+class(c)
+class(d)
+```
+
+Para construir um objeto `character` basta usar aspas (""). Se não forem utilizadas as aspas, o R entenderá que você quer atribuir um objeto/variável a outro objeto/variável (que não existe) ou descrevendo um símbolo não esperado (como um espaço, símbolo ou letra acentuada). Um objeto da classe `character` pode realizar algumas ações, mas logicamente que ações que incluam cálculos não poderão ser realizadas. Veja no seu console os resultados dos comandos a seguir para que você visualize:
+
+Erro com objeto não encontrado:
+
+```{r, eval=F}
+c <- valor
+```
+
+Erro com símbolo inesperado:
+
+```{r, eval=F}
+c <- valor nao esperado
+```
+
+Erro com argumento não-numérico:
+
+```{r, eval=F}
+2*c
+```
+
+Já um objeto lógico pode apresentar dois tipos de valores `TRUE` e `FALSE`. Esse é o objeto mais simples, pois só pode ser um valor ou outro, sendo que numericamente os valores lógicos podem ser: `TRUE` = `1` e `FALSE` = `0`. Portanto, podemos fazer a soma de dois ou mais valores lógicos:
+
+```{r}
+TRUE + FALSE + TRUE
+```
+
+Sendo essa característica muito útil, onde poderemos ver em exemplos futuros. Os valores de `TRUE` e `FALSE` devem ser escritos com todas as letras em caixa alta e também podem ser sintetizados no R com somente a primeira letra em maiúsculo (`T` e `F`). 
+
+```{r}
+T
+F
+```
+
+Os valores lógicos podem ser respostas a operadores lógicos, sendo eles: `==` (*igual a*), `!=` (*diferente a*), `>` (*maior que*), `<` (*menor que*), `>=` (*maior ou igual a*), `<=` (*menor ou igual a*). Exemplos:
+
+```{r}
+1 == 2
+1 != 2
+1 < 2
+1 > 2
+1 >= 2
+1 <= 2
+```
+
+### Exercicio 1.
+
+#### a) Construa a [Fórmula de Bhaskara](https://brasilescola.uol.com.br/matematica/formula-bhaskara.htm) segundo comando no R. Faça duas vezes, pois em uma você utilizará  `+` e em outra `-`
+
+#### b) estabeleça os seguintes valores para seu cálculo: `a = 1`,`b = 12`,`c = -13`.
+
+#### - Construindo um `vector`:
+
+Para construir uma sequência de valores que sejam atribuídos a uma única variável/objeto, use a função `c()` (de *combine*), colocando os valores separados por uma vírgula (`,`). Exemplos:
+
+```{r}
+vetor_a <- c(18.5, 22, 44.123456, pi)
+vetor_b <- c("abc", "def GHIJ", "!23$ ¨¨(), qualquer", "difícil")
+vetor_c <- c(TRUE, FALSE, T, F)
+```
+
+Sendo que cada vetor também tem sua classe:
+
+```{r}
+class(vetor_a)
+class(vetor_b)
+class(vetor_c)
+```
+
+**Observação**: o valor de $\pi$ já está presente no R como o objeto `pi`. 
+
+Cada objeto pertencerá a uma classe de objetos que seja a mais inclusiva para todas as variáveis. Portanto, se você fizer um vetor que inclua `character` e `numeric`, todos os valores serão mudados para `character`. Exemplo:
+
+```{r}
+vetor_misto <- c("zero", 1, 2, 3)
+class(vetor_misto)
+```
+
+A hierarquia no R é: 
+        
+        `logical` < `integer` < `numeric` < `character`. 
+
+Ou seja, um valor `logical` ao ser gravado com números inteiros (`integer`) será modificado para `integer` (`TRUE` para `1` e `FALSE` para `0`); um número inteiro é modificado para `numeric`; e um número será modificado para `character` se for salvo com outros valores `character` (`1` para `"1"`).
+
+#### - Construindo um `data.frame`
+
+Um data.frame é uma tabela de `n` x `m` (`n` linhas e `m` colunas), sendo que todas as `m` colunas devem ter o mesmo tamanho. Para construir um data.frame, basta usar a função `data.frame()`, juntando dois ou mais vetores. Exemplo:
+
+```{r}
+dados <- data.frame(vetor_a, vetor_c)
+dados
+```
+
+possuindo a sua própria classe (`data.frame`):
+
+```{r}
+class(dados)
+```
+
+O interessante é que cada coluna mantém a sua classe dentro de um data.frame. Para visualizar isso, utilize a função `str()` (para ver a estrutura do data.frame) ou `summary()` (Para ver o *resumo* do data.frame):
+
+```{r}
+str(dados)
+```
+
+Com `str()` vemos que são duas colunas, uma intitulada `vetor_a` da classe `numerical` (podemos ver com a descrição `num`) e outra chamada `vetor_c` da classe `logical` (podemos ver `logi`). 
+
+```{r}
+summary(dados)
+```
+
+Com `summary()` vemos que são duas colunas, uma intitulada `vetor_a` com os seguintes valores:
+    
+    Valor Mínimo (`Min.`) igual a `3.142` 
+    Primeiro quartil (`1st Qu.`) igual a `14.660`
+    Mediana (`Median`) igual a `20.250`
+    Média (`Mean`) igual a `21.941`
+    Terceiro Quartil (`3rd Qu.`) igual a `27.531`
+    Valor Máximo (`Max.`) igual a `44.123`
+
+A segunda coluna intitulada `vetor_c` vemos que é uma coluna com valores lógicos (`Mode: logical`), contabilizando quantos valores de `TRUE` e `FALSE` existem (2, respectivamente).
+
+Na hora de construirmos um data.frame, também podemos colocar nomes diferentes das colunas, desta maneira:
+
+```{r}
+dados <- data.frame(Numeros = vetor_a, 
+                    Logico = vetor_c)
+dados
+```
+
+## II. Usando indexação
+
+Os dois principais objetos que usaremos para a indexação serão vetores e tabelas (`data.frame`). Para a indexação utiliza-se os colchetes (`[]`) e numeração para visualizarmos e/ou extrairmos os valores presentes nesses objetos. No R, o primeiro valor de um vetor é extraído usando o nome do vetor seguido por `[1]`. Caso fosse o segundo valor, usamos `[2]`, e assim por diante. Exemplo:
+
+
+```{r}
+vetor_letras <- c("primeiro", "segundo", "terceiro", "quarto", "quinto")
+vetor_letras
+vetor_letras[1]
+vetor_letras[2]
+```
+Se quisermos extrair mais do que um valor, podemos utilizar um vetor de números ou uma sequência para extraí-los. Por exemplo, para extrairmos os valores `"primeiro"`, `"terceiro"` e `"quinto"`, utilizamos o vetor de numeros `c(1,3,5)` dentro dos colchetes, desta maneira:
+
+```{r}
+vetor_letras[c(1,3,5)]
+```
+
+Valores lógicos (`TRUE` e `FALSE`, ou `T` e `F`) também podem ser utilizados:
+
+```{r}
+vetor_letras[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
+```
+
+Ou se quisermos extrairmos os valores entre `"segundo"` ao `"quarto"`, podemos fazer uma sequência entre 2 e 4, utilizando `2:4` (lê-se: sequência de numeros inteiros entre 2 e 4, espaçados por 1), desta maneira:
+
+```{r}
+vetor_letras[c(2:4)]
+```
+
+No caso de tabelas, temos duas dimensões: linhas e colunas. Dessa maneira, quando extraimos o valor presente na linha `2` coluna `3`, devemos utilizar `[2,3]`, sendo o primeiro valor referente a linha da tabela e o segundo valor, após a vírgula, referente a coluna.
+Veja exemplo:
+
+- 1o Criar um data.frame composto por sequências de números:
+
+```{r}
+tabela <- data.frame(Coluna_A = 1:20,
+                     Coluna_B = 21:40,
+                     Coluna_C = 41:60,
+                     Coluna_D = 61:80,
+                     Coluna_E = 81:100)
+tabela
+```
+ 
+ Lembrando que usando `:` construimos uma sequência de números no intervalo descrito, e para colocar os nomes das colunas, basta colocar o nome da coluna e `=`, como construído acima.
+
+- 2o Extrair o valor requerido (2a linha, 3a coluna):
+
+```{r}
+tabela[2,3]
+```
+
+Intervalos também podem ser utilizados. Por exemplo, extraindo as 6 primeiras linhas (`1` a `6`) e entre as colunas `3` e `5`.
+
+
+```{r}
+tabela[1:6, 3:5]
+```
+
+Se deixarmos o argumento de linha ou de coluna em branco, todas as linhas ou colunas vão ser disponibilizadas. Por exemplo:
+
+**a)** Deixando o argumento de **linhas** em branco, selecionando a **coluna** 3:
+
+```{r}
+tabela[,3]
+```
+
+**b)** Deixando o argumento de **colunas** em branco, selecionando a **linha** 3:
+
+```{r}
+tabela[3,]
+```
+
+Em um data.frame também podemos isolar colunas usando `$`, desta maneira:
+
+```{r}
+tabela$Coluna_A
+```
+
+## III. Usando indexação e operadores lógicos
+
+Podemos mesclar o conhecimento sobre indexação e o uso de operadores lógicos para selecionar somente uma parte de uma tabela. Para esse exemplo, utilizaremos os dados de `mtcars`, que podem ser obtidos diretamente no R usando a **função** `data()`. Dessa maneira:
+
+```{r}
+data("mtcars")
+```
+
+Podemos visualizar as primeiras 6 linhas dessa tabela usando a função `head()`:
+
+```{r}
+head(mtcars)
+```
+
+No caso desta tabela, cada linha tem um nome e referem-se aos nomes dos modelos de carros avaliados. Para ver mais informações sobre esses dados, você pode usar o comando `?mtcars` em seu console, ou ir até esse [link](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) (em inglês).
+
+Se realizarmos um teste com operador lógico, observaremos como resposta uma série de `TRUE` ou `FALSE`. Veja o exemplo a seguir, para sabermos se existem carros com 6 cilindros (`cyl == 6`):
+
+```{r}
+mtcars$cyl == 6
+```
+
+Desta maneira, podemos extrair essa sequência (vetor) de valores lógicos (`TRUE`/`FALSE`) para um novo objeto chamado `carros_6cyl`:
+
+```{r}
+carros_6cyl <- mtcars$cyl == 6
+```
+
+E com esse vetor, utilizar para selecionar as linhas da tabela que seguem (com resposta igual a `TRUE`) o operador lógico executado (`mtcars$cyl == 6`):
+
+```{r}
+mtcars[carros_6cyl,]
+```
+
+Ou simplesmente podemos sintetizar esses comandos em um só (sem a construção do objeto `carros_6cyl`):
+
+```{r}
+mtcars[mtcars$cyl == 6, ]
+```
+
+        Não se esqueça que em data.frame existe a vírgula (`,`) para separar linha e coluna!
+
+### Exercício 2.
+
+#### a) Utilizando `[]`, veja entre as colunas `2` e `5` do data.frame `mtcars`
+
+#### b) Utilizando `:`, veja entre as linhas `11` e `22` do data.frame `mtcars`
+
+#### c) Utilizando `$`, extraia os três primeiros valores da coluna `qsec` do data.frame `mtcars`
+
+### Exercicio 3.
+
+#### a) Com o data.frame `mtcars`, veja quais carros tem `hp` menor do que `100`.
+
+#### c) Com o data.frame `mtcars`, veja quais carros tem o câmbio automático (`am = 1`).
+
+#### d) Com o data.frame `mtcars`, veja quais carros tem `mpg` e (utilize `&`) câmbio manual (`am = 0`)
+
+#### e) Organize o data.frame `mtcars` a partir de `mpg`, mostrando os valores com maior `mpg` para aqueles com menor `mpg`. Para isso, utilize a função `order()`. Use `?` para ajudar a responder.
+
+## IV. Estruturas condicionais
+
+ Condicionais são expressões que executam cálculos ou ações diferentes, dependendo de uma condição booleana pré-definida ser `TRUE` ou `FALSE`. Instruções condicionais incluem `if()` e a combinação `if()` / `else()`.
+ A estrutura das expressões lógicas é basicamente **SE** um fato ocorrer **ENTÃO** fazer determinada ação. No R, utilizamos o `if` para isso. 
+
+Abaixo segue alguns exemplos do uso dessas estruturas:
+Utilizaremos o consumo (`mpg`) do primeiro carro dos dados `mtcars` (chamaremos de `primeiro_carro`) e pediremos para que imprima (função `print()`) caso o carro seja considerado `"o carro é econômico!"`. Ou seja, se `mpg > 20` resultar em `TRUE`, ele imprimirá no console do R o resultado `"o carro é econômico"`. A estrutura básica dessa expressão é: 
+
+**SE** (`if`) `primeiro_carro` (`mpg` do primeiro carro) for maior que `20` (`mpg > 20`) **ENTÃO** (utilizamos `{}`) imprima (`print()`) `"o carro é econômico!"`. Veja como fica o código: 
+
+```{r}
+primeiro_carro <- mtcars$mpg[1]
+
+if(primeiro_carro > 20){
+    print("o carro é econômico!")
+}
+```
+
+Sim! `"o carro é econômico!"`, pois ele consome 1 galão para percorrer mais do que 20 milhas (`mtcars$mpg > 20`).
+
+Porém, nesse tipo de expressão lógica, ainda falta o **SENÃO**, ou seja, caso a expressão lógica não resulte em `TRUE`, mas resulte em `FALSE`. Para isso, utilizamos a expressão `else`. Veja como fica o código e a aplicação no `quinto_carro`:
+
+```{r}
+quinto_carro <- mtcars$mpg[5]
+
+if(quinto_carro > 20){
+    print("o carro é econômico!")
+    } else{
+        print("o carro é beberrão...")
+}
+```
+
+Ou seja, "o carro é beberrão...", como podemos ver pelo valor que ele apresenta:
+
+```{r}
+quinto_carro
+```
+
+
+## V. Estrutura de repetição ou de loop
+
+Outro aspecto importante para quem trabalha com programação é o uso de loopings (repetições). Estruturas em loop ou de repetição nada mais são do que automatizações de um processo que possui várias etapas. Essas estruturas organizam sequências de ações e agrupam as partes que precisam ser repetidas de um algoritmo. Para isso, utilizaremos a ferramenta `for()`. Essa ferramenta é útil para que seja utilizado um determinado algoritmo **POR** `n` vezes. Veja o exemplo abaixo:
+
+Utilizaremos o algoritmo de imprimir (`print()`) os números que estão presentes no intervalo entre `1` a `20`. Por isso, queremos que o algoritmo `print(i)` seja realizado `20` vezes, sendo que `i` é um número que está presente em (`in`) um intervalo entre `1` a `20` (`1:20`).
+
+```{r}
+for(i in 1:20){
+    print(i)
+}
+```
+
+No tópico anterior, com o uso de `if` e `else`, aplicamos um algoritmo (**SE** o carro consume pouco **ENTÃO** imprimir `"o carro é econômico"` **SENÃO** imprimir `"o carro é beberrão"`) para um carro. Mas se quisermos automatizar esse algoritmo e rodar esse algoritmo **PARA** todo o conjunto de carros, utilizaremos uma iteração (loop) utilizando a função `for`. Veja a resolução:
+
+```{r}
+consumo_todos_carros <- mtcars$mpg
+total_de_carros <- length(consumo_todos_carros)
+
+for(i in 1:total_de_carros){
+    if(consumo_todos_carros[i] > 20){
+    print("o carro é econômico!")
+    } else{
+        print("o carro é beberrão...")
+        }
+}
+```
+
+Entenda o que foi realizado:
+1. Primeiramente extraímos os valores de `mpg` do data.frame `mtcars`, atribuindo a um objeto chamado `consumo_todos_carros`;
+2. Depois extraímos o total de carros presentes nessa tabela. No caso, é o comprimento (`length()`) do vetor `consumo_todos_carros`.
+3. Construímos a iteração, onde todos os valores presentes em `consumo_todos_carros` serão analisados um a um (`i` que vai de 1 ao número `total_de_carros`), realizando o algoritmo com expressões lógicas.
+
+De um modo geral, há dois tipos de estruturas de repetição (ou loops): `for` e `while`. Na estrutura do `for` os loops são executados por um número prescrito de vezes, conforme o controle de um contador ou um índice, que é incrementado a cada ciclo de iteração. Já na estrutura do `while`, uma condição lógica é inicialmente verificada no início do loop, o qual só é exacutado enquando a condição lógica verificada é verdadeira.
+
+Veja as diferenças:
+
+```{r}
+cidades <- c("São Paulo", "Rio de Janeiro", "Fortaleza")
+
+for(cidade in cidades){
+  print(paste("A cidade", cidade, "está entre as mais afetadas pelo corona vírus no Brasil"))
+}
+
+#podemos juntar as estruturas de repetição e as condicionais 
+
+for(cidade in cidades){
+  if(cidade == "São Paulo"){
+    print(paste(cidade, "é a cidade mais afetada pelo corona vírus no Brasil"))
+  }else{
+    print(paste("A cidade", cidade, "está entre as mais afetadas pelo corona vírus no Brasil"))
+  }
+}
+
+# O comando while executa um comando enquanto a condição que ele avalia for verdadeira, caso ela seja falsa ele deixa de executar o comando
+
+idade <- 2
+
+while(idade <= 18){
+  print(paste("Você tem", idade, "anos.", "Você é menor de idade!"))
+  idade <- idade + 1 # aumentamos em uma unidade o valor de idade
+}
+
+```
+
+outra aplicação:
+
+```{r}
+idade <- 1
+while(idade <= 18){
+  if(idade %% 2 == 0){
+  print("Você é menor de idade e sua idade é um número par")
+} else{
+  print("Você é menor de idade e sua idade é um número ímpar")
+}
+idade <- idade + 1 #incrementamos em uma unidade o valor de idade
+}
+```
+
+### Exercício 4.
+
+#### a) Construa uma iteração, avaliando com um algoritmo com expressão lógica, a coluna `am`, onde o teste a ser realizado é: se `am == 0`, logo imprimir `"câmbio automático"`, caso contrário `"câmbio manual"`.
+
+#### b) Salve o resultado da iteração realizada em objeto chamado `resultado`.
+
+#### c) Utilize a função `summary()` e responda quantos carros tem câmbio automático e quantos tem câmbio manual no data.frame `mtcars`.
+
+## VI. Criando uma função
+
+Por último, lembre-se **sempre** que trabalhos repetitivos devem ser realizados pelo computador! Por isso, criar funções é muito importante para quem trabalha com bioinformática. Criar uma função é estabelecer um algoritmo criado por você! Então, veja como podemos construir um algoritmo e aplicá-lo com uma função.
+
+Vamos supor que você queira calcular a área de um retangulo, que é simplesmente a multiplicação dos valores da base e da altura desse retângulo. Veja a figura abaixo sobre paralelogramas (Fonte: [Wikipedia](https://pt.wikipedia.org/wiki/Ficheiro:%C3%81rea_dos_Paralelogramos.png) )
+
+![Figura 1 - Área dos Paralelogramas](https://upload.wikimedia.org/wikipedia/commons/0/03/%C3%81rea_dos_Paralelogramos.png)
+
+
+Como pode ver, para o cálculo da área ($A$) devemos realizar a multiplicação do comprimento da base ($b$) e da altura ($h$):
+
+$$A = b.h$$
+
+Se fossemos calcular a área (`A`) de um retângulo com base (`b`) igual a 2 e altura (`h`) igual a 3, poderíamos realizar o seguinte algoritmo:
+
+```{r}
+b <- 2
+h <- 3
+A <- b*h
+A
+```
+
+Ou poderíamos construir uma função em que nos retornaria o valor da área de um retângulo, logo após inserirmos dois valores na função. Veja como construir tal função:
+ Para isso, utilizaremos a função `function()` e devemos descrever quais **argumentos** deverão ser utilizadas pela função. 
+ 
+ A sintaxe básica para a criação de uma função no R é a seguinte:
+
+```{r  eval=F}
+nome_da_funcao <- function(arg1, arg2,...){
+  comandos que a funcao deve executar
+}
+```
+
+ No nosso caso, os argumentos são base (`b`) e altura (`h`). Para descrever como é o algoritmo, abra e feche as linhas de comando com chaves (`{}`).
+ Veja a construção da função `calcular_area` utilizando o algoritmo para o cálculo da área de um retângulo:
+ 
+```{r}
+calcular_area <- function(b, h){
+    Area = b*h
+}
+```
+
+Podemos ver agora a sua aplicação, com um retângulo que tem base (`b`) igual a `4` e altura (`h`) igual `3`:
+
+```{r}
+area <- calcular_area(b = 4, h = 3)
+area
+```
+ 
+Na maneira que fizemos a função, ela não nos retorna um valor de forma automática. Veja abaixo:
+
+```{r}
+calcular_area(b = 4, h = 3)
+```
+
+Por isso, é melhor reescrever a função utilizando um comando (função) para nos retornar o valor de `A`, utilizando `return()`:
+
+```{r}
+calcular_area <- function(b, h){
+    Area = b*h
+    return(Area)
+}
+```
+
+Desta maneira, a função `calcular_area` vai nos retornar automaticamente o valor da nossa área (`A`):
+
+```{r}
+calcular_area(b = 4, h = 3)
+```
+
+Importante notar que os objetos criados dentro da função não ficam no ambiente do R (não existe o objeto `Area`, por exemplo).
+
+Você pode ver quais são os argumentos presentes em uma função com a função `args()`
+
+```{r}
+args(calcular_area)
+```
+
+
+### Exercício 5. 
+
+#### a) Construa uma função que calcule a média aritimética de um vetor de números.
+
+#### b) Testar com o seguinte vetor de números `vetor_com_NA <- c(2, 2, 2, NA)`
+
+#### c) Execute o mesmo teste, mas dessa vez, ao invés de usar a sua própria função, utilize: `mean(vetor_com_NA, na.rm = TRUE)`. Compare os resultados. Os valores são iguais ou não? Por quê?
+
+No R há várias funções já definidas. Alguns exemplos incluem: `mean(x)`, `max(x)`, `sum(x)`, que respectivamente calculam a média, o valor máximo e a soma de números contidos em um dado objeto `x`.
+
+No exercício anterior, apresentei pela primeira vez o valor chamado `NA`. Esse valor é um símbolo para valores *não disponíveis* (*Not Available*). Além de `NA`, também existe o `NaN`, que se refere a *Not a Number*, que são valores impossiveis, como a raiz quadrada de um número negativo:
+
+```{r}
+sqrt(-1)
+```
+
+Outros valores que podem aparecer também são `Inf` ou `-Inf`, referentes a valores infinitos, e `NULL`, que refere-se a valores vazios (*nulo*). Exemplos:
+
+```{r}
+vetor_vazio <- c()
+vetor_vazio
+pi/0
+-pi/0
+```
+
+## Dica
+
+A página do grupo Rladies São Paulo no github reúne todo o material apresentado pelo grupo nos meetups que elas oferecem. Lá há mais explicações e mais exemplos que os alunos podem tentar reproduzir para aprender melhor tudo o que foi passado. Indicamos especialmente os seguintes materiais:
+
+- Primeira oficina de R básico do grupo
+
+https://maryms.github.io/2019-02-R-Basics-R-LadiesSP/#1
+
+- Oficina de R intermediário
+
+https://beatrizmilz.github.io/2019-02-R-Interm-R-LadiesSP/#1
+
+- Última versão da oficina de R básico apresentada em fevereiro desse ano
+
+https://beatrizmilz.github.io/2020-R-Ladies-SP-Basico/#1
