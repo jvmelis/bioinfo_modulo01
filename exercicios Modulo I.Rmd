@@ -29,7 +29,7 @@ print("Hello!")
 
 Nos exercícios que fizemos até agora, vocês utilizaram alguns operadores. Para relembrá-los, mostrarei cada um:
 
-## Conceitos básicos
+## I. Conceitos básicos
 
 **Operadores Matemáticos**: São aqueles utilizados para realizar as operações matemáticas mais simples, como soma (`+`), subtração (`-`), multiplicação (`*`) e divisão (`/`). Podemos também incluir a exponenciação (`^`) nesse conjunto e o cálculo da raiz quadrada (`sqrt()` do termo em inglês *square root*). A seguir, temos alguns exemplos de uso:
 
@@ -51,6 +51,10 @@ sqrt(16)
 Como o R também é uma linguagem orientada a objetos, é importante a criação de objetos. Como todo objeto, podemos montar objetos que tenham características e tamanhos diferentes. Os objetos podem ser variáveis e, para atribuirmos um valor a uma variável, podemos utilizar os símbolos `=` ou `<-`, sendo que aquilo que se encontra do lado esquerdo é a variável e do lado esquerdo o valor (ou conjunto de valores) a ser atribuído à variável. 
 
 Por exemplo: atribuir o valor numérico `2` a variável chamada `numero`:
+
+!```{r results='hide'}
+numero <- 2
+```
 
 Importante lembrar que o nome das variáveis **DEVEM**:
  
@@ -119,7 +123,7 @@ Já um objeto lógico pode apresentar dois tipos de valores `TRUE` e `FALSE`. Es
 TRUE + FALSE + TRUE
 ```
 
-Sendo essa característica muito útil, onde poderemos ver em exemplos futuros. Os valores de `TRUE` e `FALSE` devem ser escritos com todas as letras em caixa alta e também podem ser sintetizados no R com somente a primeira letra (`T` e `F`). 
+Sendo essa característica muito útil, onde poderemos ver em exemplos futuros. Os valores de `TRUE` e `FALSE` devem ser escritos com todas as letras em caixa alta e também podem ser sintetizados no R com somente a primeira letra em maiúsculo (`T` e `F`). 
 
 ```{r}
 T
@@ -129,12 +133,12 @@ F
 Os valores lógicos podem ser respostas a operadores lógicos, sendo eles: `==` (*igual a*), `!=` (*diferente a*), `>` (*maior que*), `<` (*menor que*), `>=` (*maior ou igual a*), `<=` (*menor ou igual a*). Exemplos:
 
 ```{r}
-1==2
-1!=2
-1<2
-1>2
-1>=2
-1<=2
+1 == 2
+1 != 2
+1 < 2
+1 > 2
+1 >= 2
+1 <= 2
 ```
 
 ### Exercicio 1.
@@ -174,7 +178,7 @@ A hierarquia no R é:
         
         `logical` < `integer` < `numeric` < `character`. 
 
-Ou seja, um valor `logical` ao ser gravado com números inteiros (`integer`) será modificado para `integer` (`TRUE` para `1` e `FALSE` para `0`); um número inteiro é modificado para `numeric`; um número será modificado para `character` se for salvo com outros valores `character` (`1` para `"1"`).
+Ou seja, um valor `logical` ao ser gravado com números inteiros (`integer`) será modificado para `integer` (`TRUE` para `1` e `FALSE` para `0`); um número inteiro é modificado para `numeric`; e um número será modificado para `character` se for salvo com outros valores `character` (`1` para `"1"`).
 
 #### - Construindo um `data.frame`
 
@@ -222,7 +226,7 @@ dados <- data.frame(Numeros = vetor_a,
 dados
 ```
 
-## Usando indexação
+## II. Usando indexação
 
 Os dois principais objetos que usaremos para a indexação serão vetores e tabelas (`data.frame`). Para a indexação utiliza-se os colchetes (`[]`) e numeração para visualizarmos e/ou extrairmos os valores presentes nesses objetos. No R, o primeiro valor de um vetor é extraído usando o nome do vetor seguido por `[1]`. Caso fosse o segundo valor, usamos `[2]`, e assim por diante. Exemplo:
 
@@ -300,7 +304,7 @@ Em um data.frame também podemos isolar colunas usando `$`, desta maneira:
 tabela$Coluna_A
 ```
 
-## Usando indexação e operadores lógicos
+## III. Usando indexação e operadores lógicos
 
 Podemos mesclar o conhecimento sobre indexação e o uso de operadores lógicos para selecionar somente uma parte de uma tabela. Para esse exemplo, utilizaremos os dados de `mtcars`, que podem ser obtidos diretamente no R usando a **função** `data()`. Dessa maneira:
 
@@ -360,14 +364,15 @@ mtcars[mtcars$cyl == 6, ]
 
 #### e) Organize o data.frame `mtcars` a partir de `mpg`, mostrando os valores com maior `mpg` para aqueles com menor `mpg`. Para isso, utilize a função `order()`. Use `?` para ajudar a responder.
 
-## Usando algoritmos com expressões lógicas
+## IV. Estruturas condicionais
 
-Na programação é muito importante o uso de expressões lógicas para a realização de algumas tarefas. A estrutura das expressões lógicas é basicamente **SE** um fato ocorrer **ENTÃO** fazer determinada ação. No R, utilizamos o `if` para isso. Veja o exemplo abaixo. 
+ Condicionais são expressões que executam cálculos ou ações diferentes, dependendo de uma condição booleana pré-definida ser `TRUE` ou `FALSE`. Instruções condicionais incluem `if()` e a combinação `if()` / `else()`.
+ A estrutura das expressões lógicas é basicamente **SE** um fato ocorrer **ENTÃO** fazer determinada ação. No R, utilizamos o `if` para isso. 
 
+Abaixo segue alguns exemplos do uso dessas estruturas:
 Utilizaremos o consumo (`mpg`) do primeiro carro dos dados `mtcars` (chamaremos de `primeiro_carro`) e pediremos para que imprima (função `print()`) caso o carro seja considerado `"o carro é econômico!"`. Ou seja, se `mpg > 20` resultar em `TRUE`, ele imprimirá no console do R o resultado `"o carro é econômico"`. A estrutura básica dessa expressão é: 
 
 **SE** (`if`) `primeiro_carro` (`mpg` do primeiro carro) for maior que `20` (`mpg > 20`) **ENTÃO** (utilizamos `{}`) imprima (`print()`) `"o carro é econômico!"`. Veja como fica o código: 
-
 
 ```{r}
 primeiro_carro <- mtcars$mpg[1]
@@ -391,9 +396,16 @@ if(quinto_carro > 20){
 }
 ```
 
-## Iterações (Loops)
+Ou seja, "o carro é beberrão...", como podemos ver pelo valor que ele apresenta:
 
-Outro aspecto importante para quem trabalha com programação é o uso de loopings (iterações). Para isso, utilizaremos a ferramenta `for()`. Essa ferramenta é útil para que seja utilizado um determinado algoritmo **POR** `n` vezes. Veja o exemplo abaixo:
+```{r}
+quinto_carro
+```
+
+
+## V. Estrutura de repetição ou de loop
+
+Outro aspecto importante para quem trabalha com programação é o uso de loopings (repetições). Estruturas em loop ou de repetição nada mais são do que automatizações de um processo que possui várias etapas. Essas estruturas organizam sequências de ações e agrupam as partes que precisam ser repetidas de um algoritmo. Para isso, utilizaremos a ferramenta `for()`. Essa ferramenta é útil para que seja utilizado um determinado algoritmo **POR** `n` vezes. Veja o exemplo abaixo:
 
 Utilizaremos o algoritmo de imprimir (`print()`) os números que estão presentes no intervalo entre `1` a `20`. Por isso, queremos que o algoritmo `print(i)` seja realizado `20` vezes, sendo que `i` é um número que está presente em (`in`) um intervalo entre `1` a `20` (`1:20`).
 
@@ -423,6 +435,52 @@ Entenda o que foi realizado:
 2. Depois extraímos o total de carros presentes nessa tabela. No caso, é o comprimento (`length()`) do vetor `consumo_todos_carros`.
 3. Construímos a iteração, onde todos os valores presentes em `consumo_todos_carros` serão analisados um a um (`i` que vai de 1 ao número `total_de_carros`), realizando o algoritmo com expressões lógicas.
 
+De um modo geral, há dois tipos de estruturas de repetição (ou loops): `for` e `while`. Na estrutura do `for` os loops são executados por um número prescrito de vezes, conforme o controle de um contador ou um índice, que é incrementado a cada ciclo de iteração. Já na estrutura do `while`, uma condição lógica é inicialmente verificada no início do loop, o qual só é exacutado enquando a condição lógica verificada é verdadeira.
+
+Veja as diferenças:
+
+```{r}
+cidades <- c("São Paulo", "Rio de Janeiro", "Fortaleza")
+
+for(cidade in cidades){
+  print(paste("A cidade", cidade, "está entre as mais afetadas pelo corona vírus no Brasil"))
+}
+
+#podemos juntar as estruturas de repetição e as condicionais 
+
+for(cidade in cidades){
+  if(cidade == "São Paulo"){
+    print(paste(cidade, "é a cidade mais afetada pelo corona vírus no Brasil"))
+  }else{
+    print(paste("A cidade", cidade, "está entre as mais afetadas pelo corona vírus no Brasil"))
+  }
+}
+
+# O comando while executa um comando enquanto a condição que ele avalia for verdadeira, caso ela seja falsa ele deixa de executar o comando
+
+idade <- 2
+
+while(idade <= 18){
+  print(paste("Você tem", idade, "anos.", "Você é menor de idade!"))
+  idade <- idade + 1 # aumentamos em uma unidade o valor de idade
+}
+
+```
+
+outra aplicação:
+
+```{r}
+idade <- 1
+while(idade <= 18){
+  if(idade %% 2 == 0){
+  print("Você é menor de idade e sua idade é um número par")
+} else{
+  print("Você é menor de idade e sua idade é um número ímpar")
+}
+idade <- idade + 1 #incrementamos em uma unidade o valor de idade
+}
+```
+
 ### Exercício 4.
 
 #### a) Construa uma iteração, avaliando com um algoritmo com expressão lógica, a coluna `am`, onde o teste a ser realizado é: se `am == 0`, logo imprimir `"câmbio automático"`, caso contrário `"câmbio manual"`.
@@ -431,7 +489,7 @@ Entenda o que foi realizado:
 
 #### c) Utilize a função `summary()` e responda quantos carros tem câmbio automático e quantos tem câmbio manual no data.frame `mtcars`.
 
-## Criando uma função
+## VI. Criando uma função
 
 Por último, lembre-se **sempre** que trabalhos repetitivos devem ser realizados pelo computador! Por isso, criar funções é muito importante para quem trabalha com bioinformática. Criar uma função é estabelecer um algoritmo criado por você! Então, veja como podemos construir um algoritmo e aplicá-lo com uma função.
 
@@ -454,7 +512,17 @@ A
 ```
 
 Ou poderíamos construir uma função em que nos retornaria o valor da área de um retângulo, logo após inserirmos dois valores na função. Veja como construir tal função:
- Para isso, utilizaremos a função `function()` e devemos descrever quais **argumentos** deverão ser utilizadas pela função. No nosso caso, os argumentos são base (`b`) e altura (`h`). Para descrever como é o algoritmo, abra e feche as linhas de comando com chaves (`{}`).
+ Para isso, utilizaremos a função `function()` e devemos descrever quais **argumentos** deverão ser utilizadas pela função. 
+ 
+ A sintaxe básica para a criação de uma função no R é a seguinte:
+
+```{r  eval=F}
+nome_da_funcao <- function(arg1, arg2,...){
+  comandos que a funcao deve executar
+}
+```
+
+ No nosso caso, os argumentos são base (`b`) e altura (`h`). Para descrever como é o algoritmo, abra e feche as linhas de comando com chaves (`{}`).
  Veja a construção da função `calcular_area` utilizando o algoritmo para o cálculo da área de um retângulo:
  
 ```{r}
@@ -464,7 +532,6 @@ calcular_area <- function(b, h){
 ```
 
 Podemos ver agora a sua aplicação, com um retângulo que tem base (`b`) igual a `4` e altura (`h`) igual `3`:
-
 
 ```{r}
 area <- calcular_area(b = 4, h = 3)
@@ -478,7 +545,6 @@ calcular_area(b = 4, h = 3)
 ```
 
 Por isso, é melhor reescrever a função utilizando um comando (função) para nos retornar o valor de `A`, utilizando `return()`:
-
 
 ```{r}
 calcular_area <- function(b, h){
@@ -510,6 +576,8 @@ args(calcular_area)
 
 #### c) Execute o mesmo teste, mas dessa vez, ao invés de usar a sua própria função, utilize: `mean(vetor_com_NA, na.rm = TRUE)`. Compare os resultados. Os valores são iguais ou não? Por quê?
 
+No R há várias funções já definidas. Alguns exemplos incluem: `mean(x)`, `max(x)`, `sum(x)`, que respectivamente calculam a média, o valor máximo e a soma de números contidos em um dado objeto `x`.
+
 No exercício anterior, apresentei pela primeira vez o valor chamado `NA`. Esse valor é um símbolo para valores *não disponíveis* (*Not Available*). Além de `NA`, também existe o `NaN`, que se refere a *Not a Number*, que são valores impossiveis, como a raiz quadrada de um número negativo:
 
 ```{r}
@@ -521,41 +589,22 @@ Outros valores que podem aparecer também são `Inf` ou `-Inf`, referentes a val
 ```{r}
 vetor_vazio <- c()
 vetor_vazio
--pi/0
 pi/0
+-pi/0
 ```
 
-## Funções mais complexas (mesclando iterações, expressões lógicas e outras coisas)
+## Dica
 
+A página do grupo Rladies São Paulo no github reúne todo o material apresentado pelo grupo nos meetups que elas oferecem. Lá há mais explicações e mais exemplos que os alunos podem tentar reproduzir para aprender melhor tudo o que foi passado. Indicamos especialmente os seguintes materiais:
 
+- Primeira oficina de R básico do grupo
 
+https://maryms.github.io/2019-02-R-Basics-R-LadiesSP/#1
 
-### Exercicio 6.
+- Oficina de R intermediário
 
-Construa uma função que execute a formula de Bhaskara.
+https://beatrizmilz.github.io/2019-02-R-Interm-R-LadiesSP/#1
 
+- Última versão da oficina de R básico apresentada em fevereiro desse ano
 
-## Construindo gráficos
-
-### Exercicio 4.
-
-Construa um grafico entre mpg e hp
-
-#### a) x <- mpg
-
-#### b) y <- hp
-
-#### c) plot(x, y); plot(y ~ x)
-
-### Exercicio 5. 
-
-#### a) Instalar o pacote tidyverse
-#### b) Ler os dados compilados de series/filmes
-#### c) Manipular para uma limpeza dos dados usando: mutate, as.logical, ifelse/case_when
-#### d) usar filter para filtrar filmes/series dos ultimos 5 anos, 10 anos e 20 anos
-#### e) usar select para selecionar duas colunas
-#### f) criar nova coluna com mutate chamada de antigos (series/filmes > 20 anos)
-#### g) Usar pipe (%>%)
-#### h) Usar summarize/group_by para verificar a mediana/media do ano filmes/series por aluno
-#### i) Usar arrange para ordenar os filmes/series
-
+https://beatrizmilz.github.io/2020-R-Ladies-SP-Basico/#1

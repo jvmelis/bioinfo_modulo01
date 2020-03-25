@@ -379,9 +379,10 @@ summary {
 <div id="tutoriais" class="section level2">
 <h2>Tutoriais</h2>
 <p>Nos exercícios que fizemos até agora, vocês utilizaram alguns operadores. Para relembrá-los, mostrarei cada um:</p>
-<div id="conceitos-básicos" class="section level3">
-<h3>Conceitos básicos</h3>
-<p><strong>Operadores Matemáticos</strong>: São aqueles utilizados para realizar as operações matemáticas mais simples, como soma (<code>+</code>), subtração (<code>-</code>), multiplicação (<code>*</code>) e divisão (<code>/</code>). Podemos também incluir a exponenciação (<code>^</code>) nesse conjunto. A seguir, temos alguns exemplos de uso:</p>
+</div>
+<div id="i.-conceitos-básicos" class="section level2">
+<h2>I. Conceitos básicos</h2>
+<p><strong>Operadores Matemáticos</strong>: São aqueles utilizados para realizar as operações matemáticas mais simples, como soma (<code>+</code>), subtração (<code>-</code>), multiplicação (<code>*</code>) e divisão (<code>/</code>). Podemos também incluir a exponenciação (<code>^</code>) nesse conjunto e o cálculo da raiz quadrada (<code>sqrt()</code> do termo em inglês <em>square root</em>). A seguir, temos alguns exemplos de uso:</p>
 <pre class="r"><code>23 + 45</code></pre>
 <pre><code>## [1] 68</code></pre>
 <pre class="r"><code>105 - 81</code></pre>
@@ -390,8 +391,13 @@ summary {
 <pre><code>## [1] 60</code></pre>
 <pre class="r"><code>15 / 3 </code></pre>
 <pre><code>## [1] 5</code></pre>
+<pre class="r"><code>3 ^ 3</code></pre>
+<pre><code>## [1] 27</code></pre>
+<pre class="r"><code>sqrt(16)</code></pre>
+<pre><code>## [1] 4</code></pre>
 <p><strong>Criar variáveis</strong> Como o R também é uma linguagem orientada a objetos, é importante a criação de objetos. Como todo objeto, podemos montar objetos que tenham características e tamanhos diferentes. Os objetos podem ser variáveis e, para atribuirmos um valor a uma variável, podemos utilizar os símbolos <code>=</code> ou <code>&lt;-</code>, sendo que aquilo que se encontra do lado esquerdo é a variável e do lado esquerdo o valor (ou conjunto de valores) a ser atribuído à variável.</p>
 <p>Por exemplo: atribuir o valor numérico <code>2</code> a variável chamada <code>numero</code>:</p>
+<p>!<code>{r results=&#39;hide&#39;} numero &lt;- 2</code></p>
 <p>Importante lembrar que o nome das variáveis <strong>DEVEM</strong>:</p>
 <pre><code>1. Começar com ao menos uma letra (Não podem começar com números ou símbolos)
 
@@ -399,9 +405,8 @@ summary {
 
 3. Prefira nomes de variáveis que signifiquem algo e que sejam mais *únicos*. Por exemplo: `DNA_ind235` (DNA do indivíduo 235) ao invés de `gen1` (seria gene ou genoma?) ou `dna` (de quem? Vai ter mais do que uma extração de DNA?).</code></pre>
 <p>Quanto aos valores, eles podem ser um único valor (0 dimensões), um <code>vector</code> (1 dimensão: 1 x n), um <code>data.frame</code> (2 dimensões: n linhas e m colunas, sendo que todas as colunas devem ter o mesmo número de linhas), além de <code>array</code> (mais do que duas dimensões) e <code>list</code> (objetos que podem ter elementos de diferentes tipos: <code>data.frame</code>, <code>vector</code>, valores, <code>array</code>, etc).</p>
-<ul>
-<li>Atribuindo um valor a uma variável:</li>
-</ul>
+<div id="atribuindo-um-valor-a-uma-variável" class="section level4">
+<h4>- Atribuindo um valor a uma variável:</h4>
 <pre class="r"><code>a &lt;- 18.5
 b &lt;- 442L
 c &lt;- &quot;Qualquer letr@ ou $ímbolo&quot;
@@ -430,27 +435,35 @@ d &lt;- TRUE</code></pre>
 <p>Já um objeto lógico pode apresentar dois tipos de valores <code>TRUE</code> e <code>FALSE</code>. Esse é o objeto mais simples, pois só pode ser um valor ou outro, sendo que numericamente os valores lógicos podem ser: <code>TRUE</code> = <code>1</code> e <code>FALSE</code> = <code>0</code>. Portanto, podemos fazer a soma de dois ou mais valores lógicos:</p>
 <pre class="r"><code>TRUE + FALSE + TRUE</code></pre>
 <pre><code>## [1] 2</code></pre>
-<p>Sendo essa característica muito útil, onde poderemos ver em exemplos futuros. Os valores de <code>TRUE</code> e <code>FALSE</code> devem ser escritos com todas as letras em caixa alta e também podem ser sintetizados no R com somente a primeira letra (<code>T</code> e <code>F</code>).</p>
+<p>Sendo essa característica muito útil, onde poderemos ver em exemplos futuros. Os valores de <code>TRUE</code> e <code>FALSE</code> devem ser escritos com todas as letras em caixa alta e também podem ser sintetizados no R com somente a primeira letra em maiúsculo (<code>T</code> e <code>F</code>).</p>
 <pre class="r"><code>T</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>F</code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>Os valores lógicos podem ser respostas a operadores lógicos, sendo eles: <code>==</code> (<em>igual a</em>), <code>!=</code> (<em>diferente a</em>), <code>&gt;</code> (<em>maior que</em>), <code>&lt;</code> (<em>menor que</em>), <code>&gt;=</code> (<em>maior ou igual a</em>), <code>&lt;=</code> (<em>menor ou igual a</em>). Exemplos:</p>
-<pre class="r"><code>1==2</code></pre>
+<pre class="r"><code>1 == 2</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<pre class="r"><code>1!=2</code></pre>
+<pre class="r"><code>1 != 2</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>1&lt;2</code></pre>
+<pre class="r"><code>1 &lt; 2</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>1&gt;2</code></pre>
+<pre class="r"><code>1 &gt; 2</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<pre class="r"><code>1&gt;=2</code></pre>
+<pre class="r"><code>1 &gt;= 2</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<pre class="r"><code>1&lt;=2</code></pre>
+<pre class="r"><code>1 &lt;= 2</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<ul>
-<li>Construindo um <code>vector</code>:</li>
-</ul>
+</div>
+<div id="exercicio-1." class="section level3">
+<h3>Exercicio 1.</h3>
+<div id="a-construa-a-fórmula-de-bhaskara-segundo-comando-no-r.-faça-duas-vezes-pois-em-uma-você-utilizará-e-em-outra--" class="section level4">
+<h4>a) Construa a <a href="https://brasilescola.uol.com.br/matematica/formula-bhaskara.htm">Fórmula de Bhaskara</a> segundo comando no R. Faça duas vezes, pois em uma você utilizará <code>+</code> e em outra <code>-</code></h4>
+</div>
+<div id="b-estabeleça-os-seguintes-valores-para-seu-cálculo-a-1b-12c--13." class="section level4">
+<h4>b) estabeleça os seguintes valores para seu cálculo: <code>a = 1</code>,<code>b = 12</code>,<code>c = -13</code>.</h4>
+</div>
+<div id="construindo-um-vector" class="section level4">
+<h4>- Construindo um <code>vector</code>:</h4>
 <p>Para construir uma sequência de valores que sejam atribuídos a uma única variável/objeto, use a função <code>c()</code> (de <em>combine</em>), colocando os valores separados por uma vírgula (<code>,</code>). Exemplos:</p>
 <pre class="r"><code>vetor_a &lt;- c(18.5, 22, 44.123456, pi)
 vetor_b &lt;- c(&quot;abc&quot;, &quot;def GHIJ&quot;, &quot;!23$ ¨¨(), qualquer&quot;, &quot;difícil&quot;)
@@ -467,10 +480,12 @@ vetor_c &lt;- c(TRUE, FALSE, T, F)</code></pre>
 <pre class="r"><code>vetor_misto &lt;- c(&quot;zero&quot;, 1, 2, 3)
 class(vetor_misto)</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<p>A hierarquia no R é: <code>logical</code> &lt; <code>integer</code> &lt; <code>numeric</code> &lt; <code>character</code>.</p>
-<ul>
-<li>Construindo um <code>data.frame</code></li>
-</ul>
+<p>A hierarquia no R é:</p>
+<pre><code>    `logical` &lt; `integer` &lt; `numeric` &lt; `character`. </code></pre>
+<p>Ou seja, um valor <code>logical</code> ao ser gravado com números inteiros (<code>integer</code>) será modificado para <code>integer</code> (<code>TRUE</code> para <code>1</code> e <code>FALSE</code> para <code>0</code>); um número inteiro é modificado para <code>numeric</code>; e um número será modificado para <code>character</code> se for salvo com outros valores <code>character</code> (<code>1</code> para <code>&quot;1&quot;</code>).</p>
+</div>
+<div id="construindo-um-data.frame" class="section level4">
+<h4>- Construindo um <code>data.frame</code></h4>
 <p>Um data.frame é uma tabela de <code>n</code> x <code>m</code> (<code>n</code> linhas e <code>m</code> colunas), sendo que todas as <code>m</code> colunas devem ter o mesmo tamanho. Para construir um data.frame, basta usar a função <code>data.frame()</code>, juntando dois ou mais vetores. Exemplo:</p>
 <pre class="r"><code>dados &lt;- data.frame(vetor_a, vetor_c)
 dados</code></pre>
@@ -514,8 +529,10 @@ dados</code></pre>
 ## 3 44.123456   TRUE
 ## 4  3.141593  FALSE</code></pre>
 </div>
-<div id="usando-indexação" class="section level3">
-<h3>Usando indexação</h3>
+</div>
+</div>
+<div id="ii.-usando-indexação" class="section level2">
+<h2>II. Usando indexação</h2>
 <p>Os dois principais objetos que usaremos para a indexação serão vetores e tabelas (<code>data.frame</code>). Para a indexação utiliza-se os colchetes (<code>[]</code>) e numeração para visualizarmos e/ou extrairmos os valores presentes nesses objetos. No R, o primeiro valor de um vetor é extraído usando o nome do vetor seguido por <code>[1]</code>. Caso fosse o segundo valor, usamos <code>[2]</code>, e assim por diante. Exemplo:</p>
 <pre class="r"><code>vetor_letras &lt;- c(&quot;primeiro&quot;, &quot;segundo&quot;, &quot;terceiro&quot;, &quot;quarto&quot;, &quot;quinto&quot;)
 vetor_letras</code></pre>
@@ -591,8 +608,8 @@ tabela</code></pre>
 <pre class="r"><code>tabela$Coluna_A</code></pre>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20</code></pre>
 </div>
-<div id="usando-indexação-e-operadores-lógicos" class="section level3">
-<h3>Usando indexação e operadores lógicos</h3>
+<div id="iii.-usando-indexação-e-operadores-lógicos" class="section level2">
+<h2>III. Usando indexação e operadores lógicos</h2>
 <p>Podemos mesclar o conhecimento sobre indexação e o uso de operadores lógicos para selecionar somente uma parte de uma tabela. Para esse exemplo, utilizaremos os dados de <code>mtcars</code>, que podem ser obtidos diretamente no R usando a <strong>função</strong> <code>data()</code>. Dessa maneira:</p>
 <pre class="r"><code>data(&quot;mtcars&quot;)</code></pre>
 <p>Podemos visualizar as primeiras 6 linhas dessa tabela usando a função <code>head()</code>:</p>
@@ -633,11 +650,38 @@ tabela</code></pre>
 ## Merc 280C      17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
 ## Ferrari Dino   19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6</code></pre>
 <pre><code>    Não se esqueça que em data.frame existe a vírgula (`,`) para separar linha e coluna!</code></pre>
+<div id="exercício-2." class="section level3">
+<h3>Exercício 2.</h3>
+<div id="a-utilizando-veja-entre-as-colunas-2-e-5-do-data.frame-mtcars" class="section level4">
+<h4>a) Utilizando <code>[]</code>, veja entre as colunas <code>2</code> e <code>5</code> do data.frame <code>mtcars</code></h4>
 </div>
-<div id="usando-algoritmos-com-expressões-lógicas" class="section level3">
-<h3>Usando algoritmos com expressões lógicas</h3>
-<p>Na programação é muito importante o uso de expressões lógicas para a realização de algumas tarefas. A estrutura das expressões lógicas é basicamente <strong>SE</strong> um fato ocorrer <strong>ENTÃO</strong> fazer determinada ação. No R, utilizamos o <code>if</code> para isso. Veja o exemplo abaixo.</p>
-<p>Utilizaremos o consumo (<code>mpg</code>) do primeiro carro dos dados <code>mtcars</code> (chamaremos de <code>primeiro_carro</code>) e pediremos para que imprima (função <code>print()</code>) caso o carro seja considerado <code>&quot;o carro é econômico!&quot;</code>. Ou seja, se <code>mpg &gt; 20</code> resultar em <code>TRUE</code>, ele imprimirá no console do R o resultado <code>&quot;o carro é econômico&quot;</code>. A estrutura básica dessa expressão é:</p>
+<div id="b-utilizando-veja-entre-as-linhas-11-e-22-do-data.frame-mtcars" class="section level4">
+<h4>b) Utilizando <code>:</code>, veja entre as linhas <code>11</code> e <code>22</code> do data.frame <code>mtcars</code></h4>
+</div>
+<div id="c-utilizando-extraia-os-três-primeiros-valores-da-coluna-qsec-do-data.frame-mtcars" class="section level4">
+<h4>c) Utilizando <code>$</code>, extraia os três primeiros valores da coluna <code>qsec</code> do data.frame <code>mtcars</code></h4>
+</div>
+</div>
+<div id="exercicio-3." class="section level3">
+<h3>Exercicio 3.</h3>
+<div id="a-com-o-data.frame-mtcars-veja-quais-carros-tem-hp-menor-do-que-100." class="section level4">
+<h4>a) Com o data.frame <code>mtcars</code>, veja quais carros tem <code>hp</code> menor do que <code>100</code>.</h4>
+</div>
+<div id="c-com-o-data.frame-mtcars-veja-quais-carros-tem-o-câmbio-automático-am-1." class="section level4">
+<h4>c) Com o data.frame <code>mtcars</code>, veja quais carros tem o câmbio automático (<code>am = 1</code>).</h4>
+</div>
+<div id="d-com-o-data.frame-mtcars-veja-quais-carros-tem-mpg-e-utilize-câmbio-manual-am-0" class="section level4">
+<h4>d) Com o data.frame <code>mtcars</code>, veja quais carros tem <code>mpg</code> e (utilize <code>&amp;</code>) câmbio manual (<code>am = 0</code>)</h4>
+</div>
+<div id="e-organize-o-data.frame-mtcars-a-partir-de-mpg-mostrando-os-valores-com-maior-mpg-para-aqueles-com-menor-mpg.-para-isso-utilize-a-função-order.-use-para-ajudar-a-responder." class="section level4">
+<h4>e) Organize o data.frame <code>mtcars</code> a partir de <code>mpg</code>, mostrando os valores com maior <code>mpg</code> para aqueles com menor <code>mpg</code>. Para isso, utilize a função <code>order()</code>. Use <code>?</code> para ajudar a responder.</h4>
+</div>
+</div>
+</div>
+<div id="iv.-estruturas-condicionais" class="section level2">
+<h2>IV. Estruturas condicionais</h2>
+<p>Condicionais são expressões que executam cálculos ou ações diferentes, dependendo de uma condição booleana pré-definida ser <code>TRUE</code> ou <code>FALSE</code>. Instruções condicionais incluem <code>if()</code> e a combinação <code>if()</code> / <code>else()</code>. A estrutura das expressões lógicas é basicamente <strong>SE</strong> um fato ocorrer <strong>ENTÃO</strong> fazer determinada ação. No R, utilizamos o <code>if</code> para isso.</p>
+<p>Abaixo segue alguns exemplos do uso dessas estruturas: Utilizaremos o consumo (<code>mpg</code>) do primeiro carro dos dados <code>mtcars</code> (chamaremos de <code>primeiro_carro</code>) e pediremos para que imprima (função <code>print()</code>) caso o carro seja considerado <code>&quot;o carro é econômico!&quot;</code>. Ou seja, se <code>mpg &gt; 20</code> resultar em <code>TRUE</code>, ele imprimirá no console do R o resultado <code>&quot;o carro é econômico&quot;</code>. A estrutura básica dessa expressão é:</p>
 <p><strong>SE</strong> (<code>if</code>) <code>primeiro_carro</code> (<code>mpg</code> do primeiro carro) for maior que <code>20</code> (<code>mpg &gt; 20</code>) <strong>ENTÃO</strong> (utilizamos <code>{}</code>) imprima (<code>print()</code>) <code>&quot;o carro é econômico!&quot;</code>. Veja como fica o código:</p>
 <pre class="r"><code>primeiro_carro &lt;- mtcars$mpg[1]
 
@@ -655,10 +699,13 @@ if(quinto_carro &gt; 20){
         print(&quot;o carro é beberrão...&quot;)
 }</code></pre>
 <pre><code>## [1] &quot;o carro é beberrão...&quot;</code></pre>
+<p>Ou seja, “o carro é beberrão…”, como podemos ver pelo valor que ele apresenta:</p>
+<pre class="r"><code>quinto_carro</code></pre>
+<pre><code>## [1] 18.7</code></pre>
 </div>
-<div id="iterações-loops" class="section level3">
-<h3>Iterações (Loops)</h3>
-<p>Outro aspecto importante para quem trabalha com programação é o uso de loopings (iterações). Para isso, utilizaremos a ferramenta <code>for()</code>. Essa ferramenta é útil para que seja utilizado um determinado algoritmo <strong>POR</strong> <code>n</code> vezes. Veja o exemplo abaixo:</p>
+<div id="v.-estrutura-de-repetição-ou-de-loop" class="section level2">
+<h2>V. Estrutura de repetição ou de loop</h2>
+<p>Outro aspecto importante para quem trabalha com programação é o uso de loopings (repetições). Estruturas em loop ou de repetição nada mais são do que automatizações de um processo que possui várias etapas. Essas estruturas organizam sequências de ações e agrupam as partes que precisam ser repetidas de um algoritmo. Para isso, utilizaremos a ferramenta <code>for()</code>. Essa ferramenta é útil para que seja utilizado um determinado algoritmo <strong>POR</strong> <code>n</code> vezes. Veja o exemplo abaixo:</p>
 <p>Utilizaremos o algoritmo de imprimir (<code>print()</code>) os números que estão presentes no intervalo entre <code>1</code> a <code>20</code>. Por isso, queremos que o algoritmo <code>print(i)</code> seja realizado <code>20</code> vezes, sendo que <code>i</code> é um número que está presente em (<code>in</code>) um intervalo entre <code>1</code> a <code>20</code> (<code>1:20</code>).</p>
 <pre class="r"><code>for(i in 1:20){
     print(i)
@@ -685,9 +732,9 @@ if(quinto_carro &gt; 20){
 ## [1] 20</code></pre>
 <p>No tópico anterior, com o uso de <code>if</code> e <code>else</code>, aplicamos um algoritmo (<strong>SE</strong> o carro consume pouco <strong>ENTÃO</strong> imprimir <code>&quot;o carro é econômico&quot;</code> <strong>SENÃO</strong> imprimir <code>&quot;o carro é beberrão&quot;</code>) para um carro. Mas se quisermos automatizar esse algoritmo e rodar esse algoritmo <strong>PARA</strong> todo o conjunto de carros, utilizaremos uma iteração (loop) utilizando a função <code>for</code>. Veja a resolução:</p>
 <pre class="r"><code>consumo_todos_carros &lt;- mtcars$mpg
-total &lt;- length(consumo_todos_carros)
+total_de_carros &lt;- length(consumo_todos_carros)
 
-for(i in 1:total){
+for(i in 1:total_de_carros){
     if(consumo_todos_carros[i] &gt; 20){
     print(&quot;o carro é econômico!&quot;)
     } else{
@@ -726,10 +773,97 @@ for(i in 1:total){
 ## [1] &quot;o carro é beberrão...&quot;
 ## [1] &quot;o carro é beberrão...&quot;
 ## [1] &quot;o carro é econômico!&quot;</code></pre>
-<p>Entenda o que foi realizado: 1. Primeiramente extraímos os valores</p>
+<p>Entenda o que foi realizado: 1. Primeiramente extraímos os valores de <code>mpg</code> do data.frame <code>mtcars</code>, atribuindo a um objeto chamado <code>consumo_todos_carros</code>; 2. Depois extraímos o total de carros presentes nessa tabela. No caso, é o comprimento (<code>length()</code>) do vetor <code>consumo_todos_carros</code>. 3. Construímos a iteração, onde todos os valores presentes em <code>consumo_todos_carros</code> serão analisados um a um (<code>i</code> que vai de 1 ao número <code>total_de_carros</code>), realizando o algoritmo com expressões lógicas.</p>
+<p>De um modo geral, há dois tipos de estruturas de repetição (ou loops): <code>for</code> e <code>while</code>. Na estrutura do <code>for</code> os loops são executados por um número prescrito de vezes, conforme o controle de um contador ou um índice, que é incrementado a cada ciclo de iteração. Já na estrutura do <code>while</code>, uma condição lógica é inicialmente verificada no início do loop, o qual só é exacutado enquando a condição lógica verificada é verdadeira.</p>
+<p>Veja as diferenças:</p>
+<pre class="r"><code>cidades &lt;- c(&quot;São Paulo&quot;, &quot;Rio de Janeiro&quot;, &quot;Fortaleza&quot;)
+
+for(cidade in cidades){
+  print(paste(&quot;A cidade&quot;, cidade, &quot;está entre as mais afetadas pelo corona vírus no Brasil&quot;))
+}</code></pre>
+<pre><code>## [1] &quot;A cidade São Paulo está entre as mais afetadas pelo corona vírus no Brasil&quot;
+## [1] &quot;A cidade Rio de Janeiro está entre as mais afetadas pelo corona vírus no Brasil&quot;
+## [1] &quot;A cidade Fortaleza está entre as mais afetadas pelo corona vírus no Brasil&quot;</code></pre>
+<pre class="r"><code>#podemos juntar as estruturas de repetição e as condicionais 
+
+for(cidade in cidades){
+  if(cidade == &quot;São Paulo&quot;){
+    print(paste(cidade, &quot;é a cidade mais afetada pelo corona vírus no Brasil&quot;))
+  }else{
+    print(paste(&quot;A cidade&quot;, cidade, &quot;está entre as mais afetadas pelo corona vírus no Brasil&quot;))
+  }
+}</code></pre>
+<pre><code>## [1] &quot;São Paulo é a cidade mais afetada pelo corona vírus no Brasil&quot;
+## [1] &quot;A cidade Rio de Janeiro está entre as mais afetadas pelo corona vírus no Brasil&quot;
+## [1] &quot;A cidade Fortaleza está entre as mais afetadas pelo corona vírus no Brasil&quot;</code></pre>
+<pre class="r"><code># O comando while executa um comando enquanto a condição que ele avalia for verdadeira, caso ela seja falsa ele deixa de executar o comando
+
+idade &lt;- 2
+
+while(idade &lt;= 18){
+  print(paste(&quot;Você tem&quot;, idade, &quot;anos.&quot;, &quot;Você é menor de idade!&quot;))
+  idade &lt;- idade + 1 # aumentamos em uma unidade o valor de idade
+}</code></pre>
+<pre><code>## [1] &quot;Você tem 2 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 3 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 4 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 5 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 6 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 7 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 8 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 9 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 10 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 11 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 12 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 13 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 14 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 15 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 16 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 17 anos. Você é menor de idade!&quot;
+## [1] &quot;Você tem 18 anos. Você é menor de idade!&quot;</code></pre>
+<p>outra aplicação:</p>
+<pre class="r"><code>idade &lt;- 1
+while(idade &lt;= 18){
+  if(idade %% 2 == 0){
+  print(&quot;Você é menor de idade e sua idade é um número par&quot;)
+} else{
+  print(&quot;Você é menor de idade e sua idade é um número ímpar&quot;)
+}
+idade &lt;- idade + 1 #incrementamos em uma unidade o valor de idade
+}</code></pre>
+<pre><code>## [1] &quot;Você é menor de idade e sua idade é um número ímpar&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número par&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número ímpar&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número par&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número ímpar&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número par&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número ímpar&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número par&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número ímpar&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número par&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número ímpar&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número par&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número ímpar&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número par&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número ímpar&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número par&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número ímpar&quot;
+## [1] &quot;Você é menor de idade e sua idade é um número par&quot;</code></pre>
+<div id="exercício-4." class="section level3">
+<h3>Exercício 4.</h3>
+<div id="a-construa-uma-iteração-avaliando-com-um-algoritmo-com-expressão-lógica-a-coluna-am-onde-o-teste-a-ser-realizado-é-se-am-0-logo-imprimir-câmbio-automático-caso-contrário-câmbio-manual." class="section level4">
+<h4>a) Construa uma iteração, avaliando com um algoritmo com expressão lógica, a coluna <code>am</code>, onde o teste a ser realizado é: se <code>am == 0</code>, logo imprimir <code>&quot;câmbio automático&quot;</code>, caso contrário <code>&quot;câmbio manual&quot;</code>.</h4>
 </div>
-<div id="criando-uma-função" class="section level3">
-<h3>Criando uma função</h3>
+<div id="b-salve-o-resultado-da-iteração-realizada-em-objeto-chamado-resultado." class="section level4">
+<h4>b) Salve o resultado da iteração realizada em objeto chamado <code>resultado</code>.</h4>
+</div>
+<div id="c-utilize-a-função-summary-e-responda-quantos-carros-tem-câmbio-automático-e-quantos-tem-câmbio-manual-no-data.frame-mtcars." class="section level4">
+<h4>c) Utilize a função <code>summary()</code> e responda quantos carros tem câmbio automático e quantos tem câmbio manual no data.frame <code>mtcars</code>.</h4>
+</div>
+</div>
+</div>
+<div id="vi.-criando-uma-função" class="section level2">
+<h2>VI. Criando uma função</h2>
 <p>Por último, lembre-se <strong>sempre</strong> que trabalhos repetitivos devem ser realizados pelo computador! Por isso, criar funções é muito importante para quem trabalha com bioinformática. Criar uma função é estabelecer um algoritmo criado por você! Então, veja como podemos construir um algoritmo e aplicá-lo com uma função.</p>
 <p>Vamos supor que você queira calcular a área de um retangulo, que é simplesmente a multiplicação dos valores da base e da altura desse retângulo. Veja a figura abaixo sobre paralelogramas (Fonte: <a href="https://pt.wikipedia.org/wiki/Ficheiro:%C3%81rea_dos_Paralelogramos.png">Wikipedia</a> )</p>
 <div class="figure">
@@ -744,7 +878,12 @@ h &lt;- 3
 A &lt;- b*h
 A</code></pre>
 <pre><code>## [1] 6</code></pre>
-<p>Ou poderíamos construir uma função em que nos retornaria o valor da área de um retângulo, logo após inserirmos dois valores na função. Veja como construir tal função: Para isso, utilizaremos a função <code>function()</code> e devemos descrever quais <strong>argumentos</strong> deverão ser utilizadas pela função. No nosso caso, os argumentos são base (<code>b</code>) e altura (<code>h</code>). Para descrever como é o algoritmo, abra e feche as linhas de comando com chaves (<code>{}</code>). Veja a construção da função <code>calcular_area</code> utilizando o algoritmo para o cálculo da área de um retângulo:</p>
+<p>Ou poderíamos construir uma função em que nos retornaria o valor da área de um retângulo, logo após inserirmos dois valores na função. Veja como construir tal função: Para isso, utilizaremos a função <code>function()</code> e devemos descrever quais <strong>argumentos</strong> deverão ser utilizadas pela função.</p>
+<p>A sintaxe básica para a criação de uma função no R é a seguinte:</p>
+<pre class="r"><code>nome_da_funcao &lt;- function(arg1, arg2,...){
+  comandos que a funcao deve executar
+}</code></pre>
+<p>No nosso caso, os argumentos são base (<code>b</code>) e altura (<code>h</code>). Para descrever como é o algoritmo, abra e feche as linhas de comando com chaves (<code>{}</code>). Veja a construção da função <code>calcular_area</code> utilizando o algoritmo para o cálculo da área de um retângulo:</p>
 <pre class="r"><code>calcular_area &lt;- function(b, h){
     Area = b*h
 }</code></pre>
@@ -762,56 +901,52 @@ area</code></pre>
 <p>Desta maneira, a função <code>calcular_area</code> vai nos retornar automaticamente o valor da nossa área (<code>A</code>):</p>
 <pre class="r"><code>calcular_area(b = 4, h = 3)</code></pre>
 <pre><code>## [1] 12</code></pre>
-<pre><code>    Importante notar que os objetos criados dentro da função não ficam no ambiente do R (não existe o objeto `Area`, por exemplo).</code></pre>
+<p>Importante notar que os objetos criados dentro da função não ficam no ambiente do R (não existe o objeto <code>Area</code>, por exemplo).</p>
+<p>Você pode ver quais são os argumentos presentes em uma função com a função <code>args()</code></p>
+<pre class="r"><code>args(calcular_area)</code></pre>
+<pre><code>## function (b, h) 
+## NULL</code></pre>
+<div id="exercício-5." class="section level3">
+<h3>Exercício 5.</h3>
+<div id="a-construa-uma-função-que-calcule-a-média-aritimética-de-um-vetor-de-números." class="section level4">
+<h4>a) Construa uma função que calcule a média aritimética de um vetor de números.</h4>
 </div>
-<div id="mesclando-funções-iterações-e-expressões-lógicas" class="section level3">
-<h3>Mesclando funções, iterações e expressões lógicas</h3>
+<div id="b-testar-com-o-seguinte-vetor-de-números-vetor_com_na---c2-2-2-na" class="section level4">
+<h4>b) Testar com o seguinte vetor de números <code>vetor_com_NA &lt;- c(2, 2, 2, NA)</code></h4>
 </div>
-</div>
-<div id="exercícios" class="section level2">
-<h2>Exercícios</h2>
-<div id="exercicio-1." class="section level3">
-<h3>Exercicio 1.</h3>
-<p>Fazer a Fórmula de Bhaskara segundo comando no R</p>
-</div>
-<div id="exercicio-2." class="section level3">
-<h3>Exercicio 2.</h3>
-<div id="a.-datamtcars" class="section level4">
-<h4>a. <code>data(mtcars)</code></h4>
-</div>
-<div id="b.-veja-quais-carros-tem" class="section level4">
-<h4>b. veja quais carros tem:</h4>
-<p>b.1) <code>hp &lt; 100</code></p>
-<p>b.2) <code>am = 1</code> (automatico)</p>
-<p>b.3) <code>mpg &gt; 20 &amp; am == 0</code></p>
-</div>
-<div id="c.-usando-e" class="section level4">
-<h4>c. Usando <code>$</code>, <code>[]</code> e <code>:</code></h4>
-<p>c.1) Veja entre as linhas <code>11</code> e <code>22</code> do df</p>
-<p>c.2) veja entre as colunas <code>2</code> e <code>5</code> do df</p>
-<p>c.3) Extraia os três primeiros valores da coluna <code>qsec</code></p>
-<p>c.4) Organize a tabela com o mpg maior para o menor, usando a função <code>sort()</code>. Use <code>?</code> para ajudar</p>
-</div>
-</div>
-<div id="exercicio-3." class="section level3">
-<h3>Exercicio 3.</h3>
-<p>Construa uma função que execute a formula de Bhaskara (exercicio 1).</p>
-</div>
-<div id="exercicio-4." class="section level3">
-<h3>Exercicio 4.</h3>
-<p>Construa um grafico entre mpg e hp</p>
-<div id="a.-x---mpg" class="section level4">
-<h4>a. x &lt;- mpg</h4>
-</div>
-<div id="b.-y---hp" class="section level4">
-<h4>b. y &lt;- hp</h4>
-</div>
-<div id="c.-plotx-y-ploty-x" class="section level4">
-<h4>c. plot(x, y); plot(y ~ x)</h4>
-<p>Exercicio 5. a. Instalar o pacote tidyverse b. Ler os dados compilados de series/filmes c. Manipular para uma limpeza dos dados usando: mutate, as.logical, ifelse/case_when d. usar filter para filtrar filmes/series dos ultimos 5 anos, 10 anos e 20 anos e. usar select para selecionar duas colunas f. criar nova coluna com mutate chamada de antigos (series/filmes &gt; 20 anos) g. Usar pipe (%&gt;%) h. Usar summarize/group_by para verificar a mediana/media do ano filmes/series por aluno i. Usar arrange para ordenar os filmes/series</p>
-<p>data(“mtcars”) mtcars[order(mtcars$mpg, decreasing = F),] #se quiser colocar do menor para o maior usar decreasing=F</p>
+<div id="c-execute-o-mesmo-teste-mas-dessa-vez-ao-invés-de-usar-a-sua-própria-função-utilize-meanvetor_com_na-na.rm-true.-compare-os-resultados.-os-valores-são-iguais-ou-não-por-quê" class="section level4">
+<h4>c) Execute o mesmo teste, mas dessa vez, ao invés de usar a sua própria função, utilize: <code>mean(vetor_com_NA, na.rm = TRUE)</code>. Compare os resultados. Os valores são iguais ou não? Por quê?</h4>
+<p>No R há várias funções já definidas. Alguns exemplos incluem: <code>mean(x)</code>, <code>max(x)</code>, <code>sum(x)</code>, que respectivamente calculam a média, o valor máximo e a soma de números contidos em um dado objeto <code>x</code>.</p>
+<p>No exercício anterior, apresentei pela primeira vez o valor chamado <code>NA</code>. Esse valor é um símbolo para valores <em>não disponíveis</em> (<em>Not Available</em>). Além de <code>NA</code>, também existe o <code>NaN</code>, que se refere a <em>Not a Number</em>, que são valores impossiveis, como a raiz quadrada de um número negativo:</p>
+<pre class="r"><code>sqrt(-1)</code></pre>
+<pre><code>## Warning in sqrt(-1): NaNs produzidos</code></pre>
+<pre><code>## [1] NaN</code></pre>
+<p>Outros valores que podem aparecer também são <code>Inf</code> ou <code>-Inf</code>, referentes a valores infinitos, e <code>NULL</code>, que refere-se a valores vazios (<em>nulo</em>). Exemplos:</p>
+<pre class="r"><code>vetor_vazio &lt;- c()
+vetor_vazio</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>pi/0</code></pre>
+<pre><code>## [1] Inf</code></pre>
+<pre class="r"><code>-pi/0</code></pre>
+<pre><code>## [1] -Inf</code></pre>
 </div>
 </div>
+</div>
+<div id="dica" class="section level2">
+<h2>Dica</h2>
+<p>A página do grupo Rladies São Paulo no github reúne todo o material apresentado pelo grupo nos meetups que elas oferecem. Lá há mais explicações e mais exemplos que os alunos podem tentar reproduzir para aprender melhor tudo o que foi passado. Indicamos especialmente os seguintes materiais:</p>
+<ul>
+<li>Primeira oficina de R básico do grupo</li>
+</ul>
+<p><a href="https://maryms.github.io/2019-02-R-Basics-R-LadiesSP/#1" class="uri">https://maryms.github.io/2019-02-R-Basics-R-LadiesSP/#1</a></p>
+<ul>
+<li>Oficina de R intermediário</li>
+</ul>
+<p><a href="https://beatrizmilz.github.io/2019-02-R-Interm-R-LadiesSP/#1" class="uri">https://beatrizmilz.github.io/2019-02-R-Interm-R-LadiesSP/#1</a></p>
+<ul>
+<li>Última versão da oficina de R básico apresentada em fevereiro desse ano</li>
+</ul>
+<p><a href="https://beatrizmilz.github.io/2020-R-Ladies-SP-Basico/#1" class="uri">https://beatrizmilz.github.io/2020-R-Ladies-SP-Basico/#1</a></p>
 </div>
 </div>
 

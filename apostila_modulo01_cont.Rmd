@@ -1,0 +1,45 @@
+---
+title: "Módulo I (cont)"
+author: "J van Melis"
+date: "23/03/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## VII. Funções mais complexas (mesclando iterações, expressões lógicas e outras coisas)
+
+
+
+
+### Exercicio 6.
+
+Construa uma função que execute a formula de Bhaskara.
+
+
+## VIII. Construindo gráficos
+
+### Exercicio 7.
+
+Construa um grafico entre mpg e hp
+
+#### a) x <- mpg
+
+#### b) y <- hp
+
+#### c) plot(x, y); plot(y ~ x)
+
+### Exercicio 8. 
+
+#### a) Instalar o pacote tidyverse
+#### b) Ler os dados compilados de series/filmes
+#### c) Manipular para uma limpeza dos dados usando: mutate, as.logical, ifelse/case_when
+#### d) usar filter para filtrar filmes/series dos ultimos 5 anos, 10 anos e 20 anos
+#### e) usar select para selecionar duas colunas
+#### f) criar nova coluna com mutate chamada de antigos (series/filmes > 20 anos)
+#### g) Usar pipe (%>%)
+#### h) Usar summarize/group_by para verificar a mediana/media do ano filmes/series por aluno
+#### i) Usar arrange para ordenar os filmes/series
+
