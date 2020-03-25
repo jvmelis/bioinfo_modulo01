@@ -5,11 +5,12 @@ date: "25/03/2020"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+if(!require(tidyverse)){install.packages("tidyverse")}
 ```
 
-## - Instalando pacotes
+## - Instalando e carregando pacotes
 
 Na primeira apostila você aprendeu como construir uma função, além de fundamentos básicos da programação em R. Mas como você percebeu, existem algoritmos (como calcular uma média, usando `mean()`, por exemplo) que já foram organizados em muitas funções.
 
@@ -29,33 +30,83 @@ Os pacotes precisam ser instalados e carregados. Para isso, você precisa execut
 install.packages("nome_do_pacote")`
 ```
 
-Importante saber que: (1) o nome do pacote deve estar entre aspas e dentro dos parênteses; (2) Você deve ter uma conexão com a internet; (3) Na primeira que você instalar, TUDO (documentação, vignettes, funções e dados) será instalado no seu computador; (4) A forma que apresentei acima exemplifica um pacote que está disponível em sua versão estável e disponível no núcleo central do R, chamado de [CRAN](https://cran.r-project.org/) (*comprehensive R Archive Network*), mas pacotes também podem estar disponíveis em outros lugares, tais como [GitHub](https://github.com/) ou [Bioconductor](https://www.bioconductor.org/news/bioc_3_9_release/), que é voltado para Bioinformática. Nos dois últimos casos, a função para baixar e instalar um pacote presente nesses repositórios é usar:
+Importante saber que: **(1)** o nome do pacote deve estar entre aspas e dentro dos parênteses; **(2)** Você deve ter uma conexão com a internet; **(3)** Na primeira que você instalar, TUDO (documentação, vignettes, funções e dados) será instalado no seu computador; **(4)** A forma que apresentei acima exemplifica um pacote que está disponível em sua versão estável e disponível no núcleo central do R, chamado de [CRAN](https://cran.r-project.org/) (*comprehensive R Archive Network*), mas pacotes também podem estar disponíveis em outros lugares, tais como [GitHub](https://github.com/) ou [Bioconductor](https://www.bioconductor.org/news/bioc_3_9_release/), que é voltado para Bioinformática. 
 
-Usando repositório do Github:
+As funções para baixar e instalar pacotes presentes nos repositórios do Github e do Bioconductor é diferente. Veja:
+
+- Usando repositório do Github:
 
 ```{r eval=FALSE}
 devtools::install_github("usuario/nome_do_pacote")
 ```
 
-Usando repositório do Bioconductor:
+Sendo que `devtools` é o nome do pacote para usar a função `install_github()`. Usamos `::` quando queremos usar uma função de algum pacote (já instalado no computador) mas sem precisar carregar o pacote todo (no caso, `devtools`). `usuário` é o nome do usuário do site do github.  
+
+- Usando repositório do Bioconductor:
 
 ```{r eval=FALSE}
-BiocManager::install("nome_do_pacote")
+BiocManager::install("nome_do_pacote") 
 ```
+
+Como no caso do `install_github()`, utilizamos o pacote `BiocManager` para utilizar a função `install()`.
 
 
 
 ### Exercício 1.
 
+#### a. Instalar o pacote tidyverse
 
-```{r include=FALSE, warning=FALSE}
-require(tidyverse)
-```
+**readr**: leitura dos dados
+
+**tibble**: dataframes moderno, mais simples de manipular
+
+**stringr**: trabalha com strings
+**forcats**: trabalha com fatores
+**lubridate**: trabalha com datas
+
+**magrittr**: facilita a escrita e leitura do código
+O encadeamento dos verbos com o banco de dados é realizado com o operador pipe: %>%
+
+**dplyr**: manipulação de dados. A ideia do pacote dplyr é tornar a manipulação de dados explícita utilizando verbos que indicam a ação a ser realizada. 
+
+filter(): seleciona linhas
+arrange(): ordena de acordo com uma ou mais colunas
+select(): seleciona colunas
+mutate(): cria/modifica colunas
+summarise(): sumariza/agrega colunas
+group_by(): agrupa colunas
+
+bind_rows() bind_cols() _join
+tidyr: arruma os dados
+
+**purrr**: ferramentas para programação funcional, trabalha com funções e vetores
+map(.x,.f): Para cada .x faça .f , onde:
+.x: vetor, uma lista, colunas de um data frame
+.f: função, fórmula ou vetor atômico
+
+df_titanic2 %>% map(is.na) %>%  map(sum)
+df_titanic2 %>% map_if(is.character, as.factor)
+
+**ggplot2**: cria gráficos
+
+A ideia básica é que de forma independente podemos especificar e combinar blocos de construção de um gráfico para criar praticamente qualquer tipo de exibição gráfica desejada.
+Os blocos de construção (ou camadas) de um gráfico incluem:
+
+data
+aesthetic mapping: aes() color=, fill=, size=, type=, linetype=, x=,y=, group=,
+geometric object: geom_line(), geom_smooth(),  geom_point(), geom_bar(), geom_histogram(), geom_density(), geom_boxplot(), geom_area()
+statistical transformations: stats
+scales 
+coordinate system
+position adjustments
+faceting: facet_wrap() 
+
+`<-` : (`ALT` + `-`)
+`%>%` :(`CTRL` + `SHIFT` + `M`)
 
 
 ### Exercicio 5. 
 
-#### a. Instalar o pacote tidyverse
 
 #### b. Ler os dados compilados de series/filmes
 
