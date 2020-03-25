@@ -10,11 +10,106 @@ knitr::opts_chunk$set(echo = TRUE)
 if(!require(tidyverse)){install.packages("tidyverse")}
 ```
 
-## - Instalando e carregando pacotes
+## I. Funções R base
 
-Na primeira apostila você aprendeu como construir uma função, além de fundamentos básicos da programação em R. Mas como você percebeu, existem algoritmos (como calcular uma média, usando `mean()`, por exemplo) que já foram organizados em muitas funções.
+Na primeira apostila você aprendeu como construir uma função, além de outros fundamentos básicos da programação em R. Mas como você percebeu, existem algoritmos (como calcular uma média, usando `mean()`, por exemplo) que já foram organizados em muitas funções.
+Algumas das principais funções básicas do R (ou R base) são:
 
-Nesse aspecto, o R ganha muitas funcionalidades pois uma gigantesca gama de pacotes e funções são propostas por muitos autores. Ao contrário do Python, o R ganha quanto a construção e disponibilização de pacotes.
+### A) Funções matemáticas.
+Além dos operadores matemáticos básicos (`*`, `/`, `+` e `-`), temos as funções matemáticas de potenciação ($a^x$ = `a^x`), raiz quadrada ($\sqrt(x)$ `sqrt(x)`), logaritmo ($\log_{a}(x)$ = `log(x, base = a)`), seno (`sin()`), cosseno (`cos()`), exponenciação com base do número neperiano ($e^{x}$ = `exp(x)`). VEja exemplos
+
+```{r}
+16^2
+16^(1/2)
+sqrt(16)
+log(16) # base natural (e)
+log(16, base = 2)
+sin(16)
+cos(16)
+exp(16)
+log(exp(16)) # o logaritmo com base x de um valor x elevado a um expoente, é igual ao expoente
+```
+
+### B) Funções de transformação
+Quando queremos transformar a classe (`factor` ,`character`, `numeric`, `integer`, `logical`, `vector`, `data.frame`, `list`) de uma variável para outra, podemos utilizar as funções que começam com `as.`. Veja exemplos:
+
+- de número para caracter usando `as.character`
+```{r}
+vetor_a <- 1:20
+class(vetor_a)
+vetor_a <- as.character(vetor_a)
+class(vetor_a)
+vetor_a
+```
+
+- de caracter para numero usando `as.numeric`
+```{r}
+vetor_b <- letters[1:20]
+vetor_b
+class(vetor_b)
+vetor_b <- as.numeric(vetor_b)
+class(vetor_b)
+vetor_b
+```
+
+Como pode ver, é importante lembrar da hierarquia das classes (`logical` < `integer` < `numeric` < `character`) para não perdermos informação (todas as letras foram transformadas em `NA`).
+
+- de lógico para categoria, usando `as.factor`
+```{r}
+vetor_c <- c(T, F, T, F, F, T, F, T, F)
+vetor_c
+class(vetor_c)
+vetor_c <- as.factor(vetor_c)
+vetor_c
+class(vetor_c)
+```
+Ao transformar em `factor`, os valores `TRUE` e `FALSE` foram classificados em dois níveis (`Levels`). A classe `factor` usa os seus níveis (`Levels`) e atribui números a eles, normalmente seguindo uma sequência alfabética. Logo, `FALSE` seria o nível `1` e `TRUE` seria do nível `2`. 
+
+```{r}
+as.numeric(vetor_c)
+```
+
+Também podem apresentar uma ordem em seus fatores e para isso podemos usar `as.ordered`:
+
+```{r}
+as.ordered(vetor_c)
+```
+
+Dessa maneira: `FALSE < TRUE`. Se quisermos alterar essa ordem, usamos o argumento `levels` dentro da função `ordered()`.
+
+```{r}
+ordered(vetor_c, levels = c("TRUE", "FALSE"))
+```
+
+### C) Gráfico
+
+A função para criar um gráfico simples no R é `plot()`. Essa função tem um funcionamento mais complexo, mas o resumo é: dependendo dos dados de entrada, os gráficos serão diferentes.
+A estrutura básica da função é:
+
+```{r eval=FALSE}
+plot(y ~ x)
+plot(x, y)
+plot(y ~ x, data = data.frame)
+```
+
+
+Veja exemplos:
+
+- Números x Números
+
+- Números x Fatores
+
+- Fatores x Fatores
+
+
+
+
+Existem algumas funções "de apoio" para a função `plot()` mais complexas (uso da função `par()`), porém não abordaremos, pois a maioria dos gráficos utilizados nesse curso utilizarão, em sua maioria, a função `ggplot()` (mais informações abaixo).
+
+
+## II. Instalando e carregando pacotes
+
+Muitas funções necessárias não estão presentes na base do R. Nesse aspecto, o R ganha muitas funcionalidades pois uma gigantesca gama de pacotes e funções são propostas por muitos autores. Ao contrário do Python, o R tem ganhado quanto à grande disponibilidade e à facilidade na construção de pacotes.
 
 **Mas o que é um pacote, afinal?**
 
