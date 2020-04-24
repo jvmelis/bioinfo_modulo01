@@ -145,40 +145,42 @@ BiocManager::install("nome_do_pacote")
 
 Como no caso do `install_github()`, utilizamos o pacote `BiocManager` para utilizar a função `install()`.
 
+#### Exercício 1. Instalar o pacote tidyverse
 
+## III. O tidyverse
 
-### Exercício 1.
+O tidyverse é uma coleção opinativa de pacotes R projetados para ciência de dados. Todos os pacotes compartilham uma filosofia de design, gramática e estruturas de dados subjacentes.
 
-#### a. Instalar o pacote tidyverse
+![O pipeline. [Fonte](https://www.linkedin.com/pulse/rtidyverse-power-bi-sql-davi-toshio-inada/) ](https://media-exp1.licdn.com/dms/image/C4D12AQFbRoQsfSaN5w/article-cover_image-shrink_600_2000/0?e=1593043200&v=beta&t=n8uAu7Ndn_qTADz4S3pdnLOegi5x1s0VS9nSMXpukZ8)
+
+`<-` : (`ALT` + `-`)
+
+`%>%` :(`CTRL` + `SHIFT` + `M` em PC ou `CMD` + `SHIFT` + `M` )
+
+Os principais pacotes e o que eles fazem são:
 
 **readr**: leitura dos dados
 
 **tibble**: dataframes moderno, mais simples de manipular
 
 **stringr**: trabalha com strings
+
 **forcats**: trabalha com fatores
+
 **lubridate**: trabalha com datas
 
 **magrittr**: facilita a escrita e leitura do código
 O encadeamento dos verbos com o banco de dados é realizado com o operador pipe: %>%
 
-**dplyr**: manipulação de dados. A ideia do pacote dplyr é tornar a manipulação de dados explícita utilizando verbos que indicam a ação a ser realizada. 
+**dplyr**: manipulação de dados. A ideia do pacote `dplyr` é tornar a manipulação de dados explícita utilizando verbos que indicam a ação a ser realizada. 
 
-filter(): seleciona linhas
-arrange(): ordena de acordo com uma ou mais colunas
-select(): seleciona colunas
-mutate(): cria/modifica colunas
-summarise(): sumariza/agrega colunas
-group_by(): agrupa colunas
-
-bind_rows() bind_cols() _join
-tidyr: arruma os dados
+**tidyr**: arruma os dados
 
 **purrr**: ferramentas para programação funcional, trabalha com funções e vetores
 map(.x,.f): Para cada .x faça .f , onde:
 .x: vetor, uma lista, colunas de um data frame
 .f: função, fórmula ou vetor atômico
-
+*exemplo:*
 df_titanic2 %>% map(is.na) %>%  map(sum)
 df_titanic2 %>% map_if(is.character, as.factor)
 
@@ -187,70 +189,50 @@ df_titanic2 %>% map_if(is.character, as.factor)
 A ideia básica é que de forma independente podemos especificar e combinar blocos de construção de um gráfico para criar praticamente qualquer tipo de exibição gráfica desejada.
 Os blocos de construção (ou camadas) de um gráfico incluem:
 
-data
-aesthetic mapping: aes() color=, fill=, size=, type=, linetype=, x=,y=, group=,
-geometric object: geom_line(), geom_smooth(),  geom_point(), geom_bar(), geom_histogram(), geom_density(), geom_boxplot(), geom_area()
-statistical transformations: stats
-scales 
-coordinate system
-position adjustments
-faceting: facet_wrap() 
-
-`<-` : (`ALT` + `-`)
-`%>%` :(`CTRL` + `SHIFT` + `M`)
+  * data
+  * aesthetic mapping: `aes()`, `color=`, `fill=`, `size=`, `type=`, `linetype=`, `x=`,`y=`, `group=`,
+  * geometric object: `geom_line()`, `geom_smooth()`,  `geom_point()`, `geom_bar()`, `geom_histogram()`, `geom_density()`, `geom_boxplot()`, `geom_area()`
+  * statistical transformations: stats
+  * scales 
+  * coordinate system
+  * position adjustments
+  * faceting: `facet_wrap()` 
 
 
-### Exercicio 5. 
+### A. Manipulando os dados (dplyr)
+
+`filter()`: seleciona linhas
+`arrange()`: ordena de acordo com uma ou mais colunas
+`select()`: seleciona colunas
+`mutate()`: cria/modifica colunas
+`summarise()`: sumariza/agrega colunas
+`group_by()`: agrupa colunas
+`bind_rows()` `bind_cols()` `_join`
 
 
-#### b. Ler os dados compilados de series/filmes
+### B. ggplot
 
-#### c. Manipular para uma limpeza dos dados usando: mutate, as.logical, ifelse/case_when
-
-#### d. usar filter para filtrar filmes/series dos ultimos 5 anos, 10 anos e 20 anos
-
-#### e. usar select para selecionar duas colunas
-
-#### f. criar nova coluna com mutate chamada de antigos (series/filmes > 20 anos)
-
-#### g. Usar pipe (%>%)
-
-#### h. Usar summarize/group_by para verificar a mediana/media do ano filmes/series por aluno
-
-#### i. Usar arrange para ordenar os filmes/series
-
-## VII. Funções mais complexas (mesclando iterações, expressões lógicas e outras coisas)
+## IV. RMarkdown
 
 
 
 
-### Exercicio 6.
-
-Construa uma função que execute a formula de Bhaskara.
+Exercicio 5. 
 
 
-## VIII. Construindo gráficos
+b. Ler os dados compilados de series/filmes
 
-### Exercicio 7.
+ c. Manipular para uma limpeza dos dados usando: mutate, as.logical, ifelse/case_when
 
-Construa um grafico entre mpg e hp
+ d. usar filter para filtrar filmes/series dos ultimos 5 anos, 10 anos e 20 anos
 
-#### a) x <- mpg
+ e. usar select para selecionar duas colunas
 
-#### b) y <- hp
+ f. criar nova coluna com mutate chamada de antigos (series/filmes > 20 anos)
 
-#### c) plot(x, y); plot(y ~ x)
+ g. Usar pipe (%>%)
 
-### Exercicio 8. 
+ h. Usar summarize/group_by para verificar a mediana/media do ano filmes/series por aluno
 
-#### a) Instalar o pacote tidyverse
-#### b) Ler os dados compilados de series/filmes
-#### c) Manipular para uma limpeza dos dados usando: mutate, as.logical, ifelse/case_when
-#### d) usar filter para filtrar filmes/series dos ultimos 5 anos, 10 anos e 20 anos
-#### e) usar select para selecionar duas colunas
-#### f) criar nova coluna com mutate chamada de antigos (series/filmes > 20 anos)
-#### g) Usar pipe (%>%)
-#### h) Usar summarize/group_by para verificar a mediana/media do ano filmes/series por aluno
-#### i) Usar arrange para ordenar os filmes/series
-
+ i. Usar arrange para ordenar os filmes/series
 
