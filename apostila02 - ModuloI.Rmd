@@ -1,0 +1,939 @@
+---
+title: "Módulo I - Apostila 02"
+author: "J van Melis"
+date: "25/04/2020"
+output: 
+  html_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## I. Funções R base
+
+Na primeira apostila você aprendeu como construir uma função, além de outros fundamentos básicos da programação em R. Mas como você percebeu, existem algoritmos (como calcular uma média, usando `mean()`, por exemplo) que já foram organizados em muitas funções.
+Algumas das principais funções básicas do R (ou R base) são:
+
+### A) Funções matemáticas.
+Além dos operadores matemáticos básicos (`*`, `/`, `+` e `-`), temos as funções matemáticas de potenciação ($a^x$ = `a^x`), raiz quadrada ($\sqrt(x)$ `sqrt(x)`), logaritmo ($\log_{a}(x)$ = `log(x, base = a)`), seno (`sin()`), cosseno (`cos()`), exponenciação com base do número neperiano ($e^{x}$ = `exp(x)`). VEja exemplos
+
+```{r}
+16^2
+16^(1/2)
+sqrt(16)
+log(16) # base natural (e)
+log(16, base = 2)
+sin(16)
+cos(16)
+exp(16)
+log(exp(16)) # o logaritmo com base x de um valor x elevado a um expoente, é igual ao expoente
+```
+
+### B) Funções de transformação
+Quando queremos transformar a classe (`factor` ,`character`, `numeric`, `integer`, `logical`, `vector`, `data.frame`, `list`) de uma variável para outra, podemos utilizar as funções que começam com `as.`. Veja exemplos:
+
+- de número para caracter usando `as.character`
+```{r}
+vetor_a <- 1:20
+class(vetor_a)
+vetor_a <- as.character(vetor_a)
+class(vetor_a)
+vetor_a
+```
+
+- de caracter para numero usando `as.numeric`
+```{r}
+vetor_b <- letters[1:20]
+vetor_b
+class(vetor_b)
+vetor_b <- as.numeric(vetor_b)
+class(vetor_b)
+vetor_b
+```
+
+Como pode ver, é importante lembrar da hierarquia das classes (`logical` < `integer` < `numeric` < `character`) para não perdermos informação (todas as letras foram transformadas em `NA`).
+
+- de lógico para categoria, usando `as.factor`
+```{r}
+vetor_c <- c(T, F, T, F, F, T, F, T, F)
+vetor_c
+class(vetor_c)
+vetor_c <- as.factor(vetor_c)
+vetor_c
+class(vetor_c)
+```
+Ao transformar em `factor`, os valores `TRUE` e `FALSE` foram classificados em dois níveis (`Levels`). A classe `factor` usa os seus níveis (`Levels`) e atribui números a eles, normalmente seguindo uma sequência alfabética. Logo, `FALSE` seria o nível `1` e `TRUE` seria do nível `2`. 
+
+```{r}
+as.numeric(vetor_c)
+```
+
+Também podem apresentar uma ordem em seus fatores e para isso podemos usar `as.ordered`:
+
+```{r}
+as.ordered(vetor_c)
+```
+
+Dessa maneira: `FALSE < TRUE`. Se quisermos alterar essa ordem, usamos o argumento `levels` dentro da função `ordered()`.
+
+```{r}
+ordered(vetor_c, levels = c("TRUE", "FALSE"))
+```
+
+### C) Gráfico
+
+A função para criar um gráfico simples no R é `plot()`. Essa função tem um funcionamento mais complexo, mas o resumo é: dependendo dos dados de entrada, os gráficos serão diferentes.
+A estrutura básica da função é:
+
+```{r eval=FALSE}
+plot(y ~ x)
+plot(x, y)
+plot(y ~ x, data = data.frame)
+```
+
+
+Veja exemplos:
+
+- Números x Números
+
+```{r}
+x<-1:100
+y<-rnorm(100)
+plot(y~x)
+```
+
+
+- Números x Fatores
+
+```{r}
+fator_x <- factor(c(rep("grupoA", 50), rep("grupoB", 50)))
+plot(fator_x~y)
+plot(y~fator_x)
+```
+
+
+- Fatores x Fatores
+
+
+```{r}
+fator_y <- factor(c(rep("caracA", 50), rep("caracB", 20), rep("caracc", 30)))
+plot(fator_x~fator_y)
+plot(fator_y~fator_x)
+```
+
+
+
+Existem algumas funções "de apoio" para a função `plot()` mais complexas (uso da função `par()`), porém não abordaremos, pois a maioria dos gráficos utilizados nesse curso utilizarão, em sua maioria, a função `ggplot()` (mais informações abaixo).
+
+
+## II. Instalando e carregando pacotes
+
+Muitas funções necessárias não estão presentes na base do R. Nesse aspecto, o R ganha muitas funcionalidades pois uma gigantesca gama de pacotes e funções são propostas por muitos autores. Ao contrário do Python, o R tem ganhado quanto à grande disponibilidade e à facilidade na construção de pacotes.
+
+**Mas o que é um pacote, afinal?**
+
+Um pacote é formado por um conjunto de funções reutilizáveis, documentação que descrevem como podem ser utilizadas (`help()` ou `?`) e  conjunto de dados. Alguns desses pacotes podem apresentar *vignettes*, que são semelhantes a essa apostila: comentários, imagens e porções de R scripts que ensinam sobre alguma funcionalidade de um pacote.
+
+Um exemplo: [Carlson, 2020](https://doi.org/10.1111/2041-210X.13389) publicou um pacote chamado de `embarcadero` em que é possível fazer modelagem de distribuição de espécies com árvores de regressão aditiva bayesiana (*Bayesian additive regression trees* - BART). No artigo, aceito pela revista científica [Methods in Ecology and Evolution](https://besjournals.onlinelibrary.wiley.com/journal/2041210x), o autor ensina sobre o método empregado e ainda ensina a como reproduzí-lo com R. Dessa maneira, a Ciência se torna **reproduzível** e mais **robusta**.
+
+Quando apresentei o [RStudio](https://rstudio.com/) eu comentei que essa IDE facilitou muito a dinâmica de uso com o R. Também com o objetivo de facilitar a programação e agilizar processos em R, o grande pacote [tidyverse](https://www.tidyverse.org/) trouxe uma série de facilidades. O `tidyverse` é composto por vários outros pacotes menores
+
+Os pacotes precisam ser instalados e carregados. Para isso, você precisa executar a seguinte função para instalar um pacote:
+
+```{r eval=FALSE}
+install.packages("nome_do_pacote")
+```
+
+Importante saber que: **(1)** o nome do pacote deve estar entre aspas e dentro dos parênteses; **(2)** Você deve ter uma conexão com a internet; **(3)** Na primeira que você instalar, TUDO (documentação, vignettes, funções e dados) será instalado no seu computador; **(4)** A forma que apresentei acima exemplifica um pacote que está disponível em sua versão estável e disponível no núcleo central do R, chamado de [CRAN](https://cran.r-project.org/) (*comprehensive R Archive Network*), mas pacotes também podem estar disponíveis em outros lugares, tais como [GitHub](https://github.com/) ou [Bioconductor](https://www.bioconductor.org/news/bioc_3_9_release/), que é voltado para Bioinformática. 
+
+As funções para baixar e instalar pacotes presentes nos repositórios do Github e do Bioconductor é diferente. Veja:
+
+- Usando repositório do Github:
+
+```{r eval=FALSE}
+devtools::install_github("usuario/nome_do_pacote")
+```
+
+Sendo que `devtools` é o nome do pacote para usar a função `install_github()`. Usamos `::` quando queremos usar uma função de algum pacote (já instalado no computador) mas sem precisar carregar o pacote todo (no caso, `devtools`). `usuário` é o nome do usuário do site do github.  
+
+- Usando repositório do Bioconductor:
+
+```{r eval=FALSE}
+BiocManager::install("nome_do_pacote") 
+```
+
+Como no caso do `install_github()`, utilizamos o pacote `BiocManager` para utilizar a função `install()`.
+
+Depois que um pacote é baixado (usando `install`), você não precisa fazer outras vezes essa instalação. Mas se você precisa utilizar o pacote, você precisa *ligá-lo* usando `library()` ou `require()`:
+
+```{r eval=FALSE}
+require(nome_do_pacote)
+```
+
+Ou
+
+```{r eval=FALSE}
+library(nome_do_pacote)
+```
+
+A diferença é que com `require()` você, além de *ligar* o pacote, também obtém como resultado um valor lógico (`TRUE` = pacote *ligado*, `FALSE` = pacote *não instalado*). Caso contrário, sempre é interessante usar o `library()` pois ao utilizá-lo e *ligar* o pacote, ele avisa de potenciais erros.
+
+Exemplo:
+
+```{r eval=FALSE}
+if(require(vegan)){              # Se TRUE, faça o print a seguir:
+  print("pacote vegan ligado")
+}else{                          # Se FALSE, faça o print e instale o pacote 
+  print("pacote vegan ainda nao baixado, fazendo o download...")
+  install.packages("vegan")
+  if(require(vegan)){          # Tente ligar pacote novamente, se TRUE, faça o print a seguir
+    print("pacote vegan instalado e ligado")
+  }else{                       # Se FALSE, faça o print a seguir e pare (stop).
+    stop("pacote vegan nao conseguiu ser instalado, verifique conexão ou versão do R")
+  }
+}
+```
+
+Ou pode simplificar para uma linha (bom para Reprodutibilidade):
+
+```{r eval=FALSE}
+if(!require(pacote)){install.packages("pacote")}
+```
+
+Ou seja: se `require()` resultar em FALSE (por isso o uso do `!` no começo), instala o pacote.
+
+Três pontos importantes sobre `install` e `library`:
+
+  * Faça a instalação somente uma vez. Somente realize nova instalação se houve mudança de versão
+  
+  * Use o nome do pacote **com aspas** em `install` e **sem aspas** em `library`
+  
+  * Podemos fazer a seguinte analogia: 
+  
+![install.packages()](https://www.wikihow.com/images/thumb/a/aa/Change-a-Light-Bulb-Step-4-Version-4.jpg/v4-760px-Change-a-Light-Bulb-Step-4-Version-4.jpg)
+
+
+![library()](https://www.wikihow.com/images/thumb/5/50/Change-a-Light-Bulb-Step-1-Version-4.jpg/v4-760px-Change-a-Light-Bulb-Step-1-Version-4.jpg)
+  
+### Exercício 1
+
+Instalar o pacote tidyverse
+
+```{r tidyverse, include=FALSE}
+library(tidyverse)
+```
+
+
+## III. O tidyverse
+
+O tidyverse é uma coleção opinativa de pacotes R projetados para ciência de dados. Todos os pacotes compartilham uma filosofia de design, gramática e estruturas de dados subjacentes.
+
+![O pipeline. [Fonte](https://www.linkedin.com/pulse/rtidyverse-power-bi-sql-davi-toshio-inada/) ](https://media-exp1.licdn.com/dms/image/C4D12AQFbRoQsfSaN5w/article-cover_image-shrink_600_2000/0?e=1593043200&v=beta&t=n8uAu7Ndn_qTADz4S3pdnLOegi5x1s0VS9nSMXpukZ8) 
+
+`<-` : (`ALT` + `-`)
+
+`%>%` :(`CTRL` + `SHIFT` + `M` em PC ou `CMD` + `SHIFT` + `M` )
+
+O pipe (*cano* em português), pode ser pensado como o cano do SuperMario© onde ele (um personagem) estava em um mundo com determinadas características e quando entrava no cano (*pipe* `%>%`), ele saía em um novo mundo, com outras características.
+
+
+![Super Mario](https://www.mariowiki.com/images/archive/7/76/20160129215941%21LINE_Sticker_Mario_in_a_Pipe.gif). 
+Fonte: [MarioWiki](https://www.mariowiki.com/File:LINE_Sticker_Mario_in_a_Pipe.gif)
+
+O *pipe* (` %>% `) pode ser pensado da mesma maneira: um objeto é lançado para dentro de uma função como o primeiro argumento dessa função, resultando em um objeto *diferente*.
+
+O uso de *pipe* é muito útil quando temos objetos *intermediários* e queremos que o código escrito apresente uma boa leitura para nós humanos.
+
+Por exemplo, suponhamos que eu queira construir um objeto com somente os 10 primeiros valores de um data.frame (as 10 primeiras linhas) e depois queira as três (03) últimas linhas dessas dez linhas iniciais. Podemos fazer de três maneiras:
+
+  * 1. Atribuindo objetos intermediários:
+  
+```{r}
+cabecalho <- head(mtcars, 10) # obtendo as 10 linhas iniciais
+tail(cabecalho, 3) # obtendo as 3 ultimas linhas das 10 iniciais
+```
+
+  * 2. Inserindo funções de outras funções:
+
+```{r}
+tail(head(mtcars, 10), 3)
+```
+  
+  * 3. Usando o *pipe*:
+
+
+```{r}
+mtcars %>%     # o data.frame mtcars, que vai para:
+  head(10) %>% # extração das 10 linhas iniciais, que vai para:
+  tail(3)      # extração das últimas 3 linhas, dando o resultado
+```
+
+Com a primeira maneira, a atribuição de objetos vai criando muitos objetos *intermediários* (que pode sobrecarregar a sua área de trabalho e memória), com a segunda maneira a interpretação humana pode dificultar, sendo uma leitura difícil e pode confundir na hora de escrever ou entender o código posteriormente. Já a terceira maneira agiliza a leitura e não cria objetos *intermediários*.  
+
+Os principais pacotes do tidyverse e o suas principais funções são:
+
+**readr**: leitura dos dados
+
+**tibble**: dataframes moderno, mais simples de manipular
+
+**stringr**: trabalha com strings
+
+**forcats**: trabalha com fatores
+
+**lubridate**: trabalha com datas
+
+**magrittr**: facilita a escrita e leitura do código
+O encadeamento dos verbos com o banco de dados é realizado com o operador pipe: %>%
+
+**dplyr**: manipulação de dados. A ideia do pacote `dplyr` é tornar a manipulação de dados explícita utilizando verbos que indicam a ação a ser realizada. 
+
+**tidyr**: arruma os dados
+
+**purrr**: ferramentas para programação funcional, trabalha com funções e vetores
+map(.x,.f): Para cada .x faça .f , onde:
+.x: vetor, uma lista, colunas de um data frame
+.f: função, fórmula ou vetor atômico
+
+*exemplo:*
+
+`df_titanic2 %>% map(is.na) %>%  map(sum)`
+
+`df_titanic2 %>% map_if(is.character, as.factor)`
+
+**ggplot2**: cria gráficos
+
+Recentemente, foi lançando também o [tidymodels](https://www.tidymodels.org/), que usa a mesma filosofia do tidyverse, mas focado em modelagem e aprendizado de máquinas.
+
+Uma das diferenças do R base com o tidyverse é a presença de `data.frame` em formato `tibble`. Veja a diferença com o data.frame de `iris` a seguir. `iris` é um banco de dados MUITO utilizado e que se refere a 3 espécies de iris (setosa, versicolor e viridis), com dados de comprimento (`.Length`) e largura (`.Width`) de pétalas (`Petal`) e sépalas (`Sepal`).
+
+```{r}
+data("iris")
+head(iris)
+as_tibble(iris)
+```
+
+A principal diferença é que no formato `tibble` é ligeiramente ajustado para trabalhar melhor no tidyverse. Mais informações vão ser dadas posteriormente, mas a principal diferença é que abaixo de cada nome de coluna há o tipo da variável, que podem ser:
+
+`lgl`: Lógico (`TRUE` ou `FALSE`)
+
+`int`: Números inteiros (`1L`, `22L`, etc..)
+
+`dbl`: Números reais 
+
+`chr`: caracteres (ou string)
+
+`fctr`: fator (variável categórica)
+
+`date`: para datas
+
+`dtm`: para datas e hora
+
+Os tibbles têm um método de impressão refinado que mostra apenas as 10 primeiras linhas e todas as colunas que cabem na tela. Isso facilita muito o trabalho com dados grandes. Além do nome, cada coluna relata seu tipo, um bom recurso emprestado de `str()`.
+
+### A. Manipulando os dados (dplyr)
+
+`filter()`: seleciona linhas, filtrando conforme um teste lógico (igualdade, diferença, `NA`, `NULL`)
+
+`arrange()`: ordena de acordo com uma ou mais colunas
+
+`select()`: seleciona colunas
+
+`mutate()`: cria/modifica colunas
+
+`summarise()`: sumariza/agrega colunas
+
+`group_by()`: agrupa dentro das colunas
+
+Todas essas funções trabalham da mesma maneira: o primeiro argumento é um data.frame, os argumentos subsequentes utiliza o nome de cada coluna (sem aspas). O resultado é um data.frame (ou tibble).
+
+Vamos utilizar para isso os dados presentes no pacote `dplyr` chamado de `starwars`, que mostra características de personagens dos filmes de [Star Wars](https://pt.wikipedia.org/wiki/Star_Wars).
+
+```{r}
+data("starwars")
+class(starwars)
+starwars
+```
+
+#### `filter()`: 
+
+Utiliza de argumentos lógicos (igualdades, maior/menor, `is.na`):
+
+```{r}
+filter(starwars, name=="Luke Skywalker")
+```
+
+Ou você pode usar o pipe (` %>% `) para colocar o 1o argumento (um data.frame ou um tibble) dentro da função:
+
+```{r}
+starwars %>% filter(mass > 100)
+```
+
+
+O pipe também funciona para funções R base, como `head()`, `dim()`, `summary()` e para mais do que uma vez:
+
+```{r}
+ starwars %>% filter(mass > 100) %>% head(3)
+```
+
+No caso acima, o tibble `starwars` foi o primeiro argumento para função `filter()` e o resultado dessa função (que é um tibble) foi utilizada como primeiro argumento para a função `head()`, que também utilizou o argumento `3` (3 linhas).
+
+
+Mais do que uma operação lógica podem ser utilizadas:
+
+```{r}
+starwars %>% filter(species == "Human", gender=="female")
+```
+
+Quando mais do que um valor for usado como critério, uma função útil é usar `%in%` ou também o `|` que seria entendido como "ou". Por exemplo:
+
+```{r}
+starwars %>% filter(homeworld %in% c("Tatooine", "Naboo"), height<160|height>200)
+```
+
+Também são utilizados `&` ("e"), `&&` ("e" para expressões múltiplas) e `||`  ("ou" para expressões múltiplas).
+
+#### `arrange()`
+
+Funciona como o `filter()`, mas ao invés de filtrar, ele organiza os valores em ordem crescente:
+
+```{r}
+starwars %>% arrange(height, mass) 
+```
+
+para a ordem decrescente, utiliza-se `desc()`:
+
+```{r}
+starwars %>% arrange(desc(height, mass)) 
+```
+
+A ordem das colunas inseridas podem resultar em tabelas diferentes, pois inicialmente organiza o primeiro valor e depois o segundo. Compare com o resultado anterior com o resultado a seguir:
+
+
+```{r}
+starwars %>% arrange(desc(mass, height)) %>% head(4) 
+```
+
+Valores que faltam (`NA`), sempre são colocados no final:
+
+```{r}
+starwars %>% arrange(desc(mass, height)) %>% tail(4) 
+```
+
+#### `select()`
+
+Essa função se assemelha com o uso dos `[]` para selecionar colunas, porém é facilitada pois, ao ser utilizada no RStudio, as colunas são sugeridas ao serem digitadas e não precisa usar `" "`. Veja:
+
+```{r}
+starwars %>% select(name, eye_color, species)
+```
+
+E conforme a ordem é colocada, independente de como é no tibble original:
+
+```{r}
+starwars %>% select(name, films, mass)
+```
+
+Se você quiser selecionar um intervalo de colunas, você pode usar `:`:
+
+```{r}
+starwars %>% select(name:skin_color)
+```
+
+E também pode excluir determinadas colunas usando `-` e `c()`:
+
+```{r}
+starwars %>% select(-c(height:homeworld))
+```
+
+A função `select()` também pode ser mesclada com outras funções como:
+
+`starts_with()`, `ends_with()` e `contains()`
+
+```{r}
+starwars %>% select(starts_with("s"))
+```
+
+Use o help da função `?select` para aprender outros usos. 
+
+#### `mutate()`
+
+Com essa função, o uso de `$` e `<-` são agilizados. Portanto, ao invés de usarmos, por exemplo, a seguinte função: `starwars$IMC <-starwars$mass/((starwars$height/100)^2)` para criar uma coluna chamada `IMC` (índice de massa corpórea da personagem), você pode utilizar `mutate()`, na seguinte maneira:
+
+```{r}
+starwars %>% mutate(IMC = mass/((height/100)^2)) %>% select(name, height, mass, IMC)
+```
+
+Como pode ver, já começamos a mesclar as funções que acabamos de conhecer.
+
+Você pode adicionar mais do que uma coluna dentro de um mesmo `mutate()`. E lembre-se que podemos *quebrar linhas* no R:
+
+
+```{r}
+starwars %>% 
+  mutate(altura = height/100,
+         IMC = mass/altura^2) %>% 
+  select(name, altura, mass, IMC) 
+```
+
+#### `summarise()`
+
+É uma forma de aplicar o `summary()` só que com mais *controle*. Nesse caso, você deve colocar o nome da coluna que resultará de seu *resumo* e a função ou operador lógico que vá ser aplicado a alguma coluna. 
+Ou seja:
+
+`df`: o data.frame (ou tibble)
+
+`coluna_resumo`: nome da coluna com o resumo de seus dados
+
+`coluna_info`: a(s) coluna(s) que fornecerá(ão) os dados
+
+`funcao`: função e/ou operador lógico que é utilizado para *resumir* os dados.
+
+`summarise(df, coluna_resumo = funcao(coluna_info)`
+
+Exemplos:
+
+A média de altura das personagens:
+
+```{r}
+starwars %>% summarise(Media_Altura = mean(height, na.rm = TRUE))
+```
+
+Colocando mais do que uma função: A média de altura e quantidade de personagens:
+
+```{r}
+starwars %>% 
+  summarise(Media_Altura = mean(height, na.rm = TRUE),
+            Qtd_personagens = n())
+```
+
+#### `group_by()` 
+
+Essa função é muito aplicada em conjunto da função `summarise()`, pois realiza *resumos* de colunas sendo agrupadas segundo algum agrupamento.
+
+Por exemplo, podemos realizar o cálculo das médias de alturas conforme gênero (`gender`)
+
+```{r}
+starwars %>% group_by(gender) %>%
+  summarise(media_altura = mean(height, na.rm = TRUE))
+```
+
+cálculo das médias de alturas conforme gênero (`gender`) e espécie (`species`) 
+
+```{r}
+starwars %>% group_by(gender, species) %>%
+  summarise(media_altura = mean(height, na.rm = TRUE))
+```
+
+cálculo das médias de alturas e número de personagens conforme gênero (`gender`) e espécie (`species`) 
+
+```{r}
+starwars %>% group_by(gender, species) %>%
+  summarise(media_altura = mean(height, na.rm = TRUE),
+            numero_personagens = n())
+```
+
+Cálculo das médias de alturas e número de personagens conforme gênero (`gender`) e espécie (`species`), ordenando de forma crescente a partir de `media_altura` 
+
+```{r}
+starwars %>% group_by(gender, species) %>%
+  summarise(media_altura = mean(height, na.rm = TRUE),
+            numero_personagens = n()) %>% 
+  arrange(media_altura)
+```
+
+Importante lembrar que o grupo mantém-se no data.frame resultante. Logo, o uso de `ungroup()` pode ser necessário.
+
+### Exercício 2
+
+**a)** Utilize as funções `is.na()` e `filter()` para *limpar* os dados de `starwars`. Chame esse novo data.frame de `sw_clean`.  Para *limpar* os dados, retire os valores que apresentem os valores `NA` para as colunas `height`, `mass`, `hair_color`, `skin_color`, `eye_color`, `birth_year`, `homeworld`, e `species`.
+
+**b)** O que acontece se você selecionar múltiplas vezes uma coluna com `select()` (por ex.: `select(df, col1, col1, col1)`)?
+
+**c)** Encontre a espécie e gênero que tenha maior/menor massa e maior/menor altura do banco de dados `starwars`.
+
+**d)** Com o banco de dados `iris`, faça uma tabela com a média, desvio padrão das medidas de **área** das pétalas para cada espécie. Para isso, você utilizará as funções `mutate()`, para criar a coluna `area`, `group_by()` para agrupar conforme a espécie (`species`) e `summarise()` para calcular os valores de média (função `mean()`) e desvio padrão (`sd()`). Para o cálculo da área, assuma que cada pétala seja uma elipse e para cálculo da elipse utilizamos a seguinte fórmula:
+
+$$A = \pi.a.b$$
+
+Sendo $a$ e $b$ os valores do menor e maior raio da elipse.
+
+![Elipse](https://upload.wikimedia.org/wikipedia/commons/c/c0/Moment_of_area_of_an_ellipse.svg)
+
+**e)** 
+
+### B. Fazendo gráficos (ggplot)
+
+A ideia básica é que de forma independente podemos especificar e combinar blocos de construção de um gráfico para criar praticamente qualquer tipo de exibição gráfica desejada.
+Os blocos de construção (ou camadas =  *layers*) de um gráfico incluem:
+
+  * Data
+  * Aesthetic: `aes()`
+  * Geometries
+  * Facet: `facet_wrap()`, `facet_grid()` 
+  * statistics: `stat_`
+  * Coordinates
+  * Themes: `theme_`
+
+Podemos pensar essas partes como camadas (*layers*) para compor a imagem:
+
+![Camadas do ggplot](https://p4husp.github.io/material/ggplot2/img/montar_grafico_6.png) [Fonte](https://p4husp.github.io/material/ggplot2/)
+
+Utilizaremos o banco de dados `iris` para esse exemplo. Veja o resumo (`summary()`) desses dados:
+
+```{r}
+summary(iris)
+```
+
+#### Aesthetics
+
+Se colocarmos somente os dados e a função `ggplot()`, o resultado será vazio:
+
+```{r}
+ggplot(iris)
+```
+
+![Data + Aesthetics](https://p4husp.github.io/material/ggplot2/img/montar_grafico_1.png)
+
+
+Porém temos que descrever quais variáveis serão mapeadas. Aquelas variáveis que serão utilizadas. Vamos colocar então as variáveis `Sepal.Length` e `Sepal.Width` dentro da estética (aesthetics: `aes()`) na função `ggplot()`, descrevendo quais serão os eixos `x` e `y`:
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y= Sepal.Width))
+```
+
+Cadê os pontos? Ainda não foram colocados, pois não foi descrita a geometria a ser utilizada
+
+Outros termos que podemos utilizar dentro de `aes()` são: `color`, `fill`, `size`, `type`, `linetype`,  `group`.
+Cada um tem as suas características e que voltaremos a discutir quando aprendermos as **geometrias**.
+
+#### Geometries
+
+![Data + Aesthetics + Geometry](https://p4husp.github.io/material/ggplot2/img/montar_grafico_2.png)
+
+É basicamente a escolha do formato que os dados serão apresentados. Como será um gráfico de dispersão, chamaremos a função `geom_point()`. Agora, para cada *layer*, utilizaremos a adição (`+`) para colocá-la (Para facilitar a leitura e a escrita do código, quebramos as linhas após cada `+`):
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y= Sepal.Width)) + 
+  geom_point()
+```
+
+Podemos adicionar outras camadas, como por exemplo, uma linha de regressão de um modelo linear, com a função `geom_smooth()`. Vamos utilizar dois argumentos nessa função (`method = ` e `se = `), que descreverão o tipo de modelo que quero usar para criar a linha (nesse caso *modelo linear*) e se eu quero colocar uma área onde mostre o erro padrão do modelo (*standard error = se*).
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y= Sepal.Width)) + 
+  geom_point()+
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Voltando a **estética**, podemos adicionar a cor (`color=`) condicionada a espécie (`Species`):
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y= Sepal.Width)) + 
+  geom_point(aes(color=Species))
+```
+
+Podemos ver que a reta do modelo linear não faz sentido se considerarmos as espécies:
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y= Sepal.Width)) + 
+  geom_point(aes(color=Species))+
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Portanto, podemos colocar esse condicionamento de cores à camada inicial do seu gráfico (dentro da função `ggplot()`):
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y= Sepal.Width, color=Species)) + 
+  geom_point()
+```
+
+Se você adicionar outras camadas que utilizem cores, elas também serão condicionadas às espécies. Como ao adicionarmos a linha de regressão do modelo linear:
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y= Sepal.Width, color=Species)) + 
+  geom_point()+
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Que acaba construindo 3 linhas independentes (para cada espécie).
+
+Outras funções `geom_` são:
+
+`geom_bar()`: constroi gráfico de barras
+
+`geom_histogram()`: Histogramas
+
+`geom_density()`: Gráficos de Densidade
+
+`geom_boxplot()` e `geom_violin()`: Gráficos *boxplot* e *violin*
+
+Essas funções serão mais bem exploradas no módulo de **Análise Exploratório de Dados**.
+
+Outra vantagem do `ggplot` é que podemos adicionar as camadas de maneira indepedente, sendo que cada gráfico que for construído pode ser atribuído a um objeto. Veja o exemplo a seguir:
+
+```{r}
+graf_pontos <- ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, color=Species))+
+  geom_point()
+graf_pontos
+
+graf_pontos+geom_smooth(method="lm", se=FALSE)
+```
+
+
+Um breve guia de qual gráfico pode ser usado pode ser encontrado aqui (Fonte: [Cornell University](https://guides.library.cornell.edu/c.php?g=631355&p=4411789)):
+
+![Qual gráfico?](https://leanbuilds.files.wordpress.com/2009/11/yjwta.jpg)
+
+#### Facets
+
+![Data + Aesthetics + Geometry + Facets](https://p4husp.github.io/material/ggplot2/img/montar_grafico_3.png)
+
+Podemos isolar cada espécie em gráficos separados. Para isso, utilizamos o `facet_wrap()`
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y= Sepal.Width, color=Species)) + 
+  geom_point()+
+  geom_smooth(method = "lm", se = FALSE)+
+  facet_wrap(~Species)
+```
+
+Podemos também realizar essa separação em linhas, utilizando a função `facet_grid()`:
+
+```{r}
+ggplot(iris, aes(x=Sepal.Length, y= Sepal.Width, color=Species)) + 
+  geom_point()+
+  geom_smooth(method = "lm", se = FALSE)+
+  facet_grid(Species~.)
+```
+
+As funções `facet_` também podem ser utilizadas para mais do que uma variável categórica, como por exemplo:
+
+```{r}
+ggplot(mtcars, aes(x = mpg, y=wt))+
+  geom_point()+
+  facet_grid(am~cyl)
+```
+
+`facet_wrap`: retorna gráficos dispostos de forma simétrica para cada nível da variável.
+`facet_grid`: irá retornar multiplos gráficos distribuidos na vertical ou na horizontal (linha ~ coluna).
+
+#### Statistics
+
+Muito importante para verificarmos distribuições de variáveis, contagem de casos e visualização de modelos estatísticos.
+
+![Data + Aesthetics + Geometry + Facets + Statistics](https://p4husp.github.io/material/ggplot2/img/montar_grafico_4.png)
+
+#### Coordinates
+
+`coord_flip()`
+
+Faremos um exemplo com gráficos de barras. Para construirmos barras, precisamos de uma variável qualitativa no eixo x e o número de observações para cada variável qualitativa no eixo y (cada `level` da variável no eixo `x` não pode ter mais do que uma observação).
+
+Para isso, utilizaremos as funções aprendidas `group_by()` `n()` e `summarise()` para construirmos esse gráfico. Veja o exemplo a seguir com os dados de `starwars`. Faremos um gráfico de barras para o número de personagens em relação com o seu gênero. 
+
+Primeiro passo, uma tabela com os dados de `n_personagens` e `gender`:
+
+```{r}
+dados<-starwars %>% 
+  group_by(gender) %>%
+  summarise(n_personagens = n())
+dados
+```
+
+Segundo passo, construi o gráfico usando `geom_bar()`
+
+```{r}
+graf_barras<-ggplot(dados, aes(x = gender, y=n_personagens))+
+  geom_bar(stat="identity")
+graf_barras
+```
+
+Porém, podemos usar `coord_flip()` para inverter o eixo x com o eixo y:
+
+```{r}
+graf_barras+coord_flip()
+```
+
+Ou também:
+
+```{r}
+starwars %>% 
+  ggplot(aes(x=gender))+
+  geom_bar() +
+  coord_flip()
+```
+
+#### Theme
+
+Alguns temas existentes são: 
+
+`theme_bw()`
+
+`theme_classic()`
+
+`theme_dark()`
+
+`theme_grey()`
+
+`theme_light()`
+
+```{r}
+graf_barras+theme_classic()
+```
+
+Você pode experimentar outros temas.
+
+Neste [link](https://rstudio.com/wp-content/uploads/2016/03/ggplot2-cheatsheet-portuguese.pdf) você pode encontrar uma síntese sobre o ggplot.
+
+Também é interesse conhecer o pacote `esquisse` e sua função `esquisser`, que faz um *arrasta e solta* com os dados para construir alguns gráficos.
+
+### Exercício 3 - mtcars
+
+**a)** Transforme os dados `mtcars` em um tibble chamados `carros`. Você utilizará a função `as_tibble()` para isso.  
+
+**b)** Transforme o tibble `carros`, criando uma nova coluna intitulada `cambio`, onde os carros que apresentarem os valores de `am` igual a `0` (`am==0`) devem ser intitulados de `automatico` e aqueles onde o valor for igual a `0` devem ser intitulados de `manual`. Você utilizará as funções `mutate()` e `ifelse()` para isso. Não esqueça de atribuir esse novo tibble a um tibble chamado `carros`.
+
+**c)** *Traduza* as variáveis `wt` (peso em mil libras) e `mpg` (milhas por galão) para escalas utilizadas no Brasil, chamando as novas variáveis de `peso` e `kml`. Para esse exercício, considere que 1000 libras = 453.5 kg, 1 milha = 1.61 km e 1 galão = 3.78 litros. Para esse exercício você utilizará a função `mutate()`
+
+**d)** Usando a função `select()`, selecione somente as variáveis `kml`, `peso` e `cambio` de seu tibble `carros`. 
+
+**e)** Usando as funções `group_by()` e `summarise()`, calcule os valores médios (usando função `mean()`), máximos (`max()`) e mínimos (`min()`) de `kml` e `peso` para cada tipo de câmbio.
+
+**f)** Construa um gráfico de pontos (`geom_point()`) para a relação entre `kml` (eixo y) e `peso` (eixo x). Estabeleça que a cor (`aes(color = cambio)`) e o formato dos pontos (`aes(shape = cambio)`) devem ser de acordo com `cambio` do carro.
+
+**g)** Coloque o tamanho do ponto para 3 (`size = 3`).
+
+**h)** Mude o tema do gráfico para o tema clássico (`theme_classic()`).
+
+### Exercício 4 - airquality
+
+Instale o pacote `datasets` em seu ambiente de trabalho e obtenha os dados de `airquality` através da função R `data()`.
+
+Esses são dados de qualidade do ar de Nova Iorque de 1973 entre os meses de Maio a Setembro.
+Os dados referem-se a:
+
+`Ozone`: Quantidade de ozônio (em partes por bilhão - ppb)
+
+`Solar.R`: Incidência de Radiação Solar (em langley - lang)
+
+`Wind`: Velocidade do vento (em milhas por hora - mph).
+
+`Temp`: Temperatura (em graus Fahrenheit - F).
+
+`Month`: Mês em que foi coletada a informação (numeradas de 5 a 9).
+
+`Day`: Dia do mês em que foi coletada a informação (numeradas de 1 a 30/31).
+
+**a)** Transforme os dados `airquality` em um tibble chamado `qualidade_ar`. Utilize `as_tibble()` para isso.
+
+**b)** *Transforme* as variáveis `Wind` e `Temp` em variáveis conforme o sistema métrico. Para isso, considere que 1 mph = 1.61 km/h e para a transformação de $^\circ \tt{F}$ em $^\circ \tt{C}$ siga a equação:
+
+$$ T_{^\circ \tt{C}} = \frac{T_{^\circ \tt{F}}-32}{1.8}$$
+
+Chame essas novas variáveis de `Vento` e `Temp.C`. Não se esqueça de atribuir o resultado a um tibble chamado `qualidade_ar`. Você utilizará nesse exercício a função `mutate()`. 
+
+**c)** Faça o cálculo dos valores de Temperatura média, máxima e mínima para cada mês em que foram mensuradas. Para isso, você utilizará as funções `group_by()`, `summarise()`, `mean()` `max()`, `min()`. Chame as variáveis construídas de `Temp_med`, `Temp_max` e `Temp_min`, respectivamente.
+
+**d)** A partir do tibble `qualidade_ar` construa uma nova variável chamada `Dias`, que deve ser uma sequência numérica relativa aos dias de início até o final das mensurações. Também transforme a variável `Month` em uma variável fator, chamada de `Mes`. Para isso, você utilizará as funções `mutate()`, `length()` e `as.factor()`. Não esqueça de atribuir o resultado a tibble intitulada `qualidade_ar`.
+
+**e)** Faça um gráfico de linhas usando a função `geom_line()`, onde a variável `Dias` deve estar no eixo x e a temperatura (`Temp.C`) deve estar no eixo y. Atribua esse gráfico a um objeto chamado `graf_temp`.
+
+**f)** A partir do gráfico `graf_temp`, modifique o tema do gráfico para `theme_classic()`. 
+
+**g)** A partir do gráfico `graf_temp`, modifique os rótulos dos eixos x e y usando as funções `xlab()` e `ylab()`, onde os rótulos dos eixos devem ser *"Dias de mensuração"* (eixo x) e *"Temperatura em NY\n (em graus Celsius)"* (eixo y).
+
+**h)** Faça um gráfico de linhas usando a função `geom_line()`, onde a variável `Days` deve estar no eixo x e a temperatura (`Temp.C`) deve estar no eixo y. Utilize `facet_grid(Mes~.)` para construir gráficos em paralelo. Utilize o tema minimal (`theme_minimal()`).
+
+## IV. RMarkdown
+
+### A. Basico
+
+Vá em *File > New File > R Markdown...*
+
+Pode ser em html, pdf ou word.
+
+### B. Formato texto
+
+Para valores em *itálico*, utilize: `*italico*` e para textos em **negrito** use `**negrito**`
+
+Você pode usar dois $ para colocar fórmulas matemáticas. Exemplo:
+
+`$\frac{1}{2}$` vira $\frac{1}{2}$
+
+#### Principais operações matemáticas
+
+|operação              | codigo Rmarkdown                      | resultado|
+|:--------------------:|:-------------------------------------:|:-------------------:|
+|fração                | `$\frac{a}{b}$`                       |$\frac{a}{b}$|
+|raiz quadrada         | `$\sqrt{x}$`                          |$\sqrt{x}$|
+|diferente             | `$a \ne b$`                           |$a \ne b$|
+|menor                 | `$a < b$`                             |$a < b$|
+|maior                 | `$a > b$`                             |$a > b$|
+|maior e igual         | `$x \ge y$`                           |$x \ge y$|
+|menor e igual         | `$x \le y$`                           |$x \le y$|
+|subescrito            | `$X_{a}$`                             |$X_{a}$|
+|sobrescrito           | `$Y^{ith}$`                           |$Y^{ith}$|
+|linha superior        | `$\overline{x}$`                      |$\overline{x}$|
+|circunflexo           | `$\hat{x}$`                           |$\hat{x}$|
+|til                   | `$\tilde{x}$`                         |$\tilde{x}$|
+|binomio de newton     | `$\binom{n}{k}$`                      |$\binom{n}{k}$|
+|pertencimento         | `$x \in y$`                           |$x \in y$|
+|subgrupo              | `$x \subset y$`                       |$x \subset y$|
+|união                 | `$x \cup y$`                          |$x \cup y$|
+|intersecção           | `$x \cap y$`                          |$x \cap y$|
+|similaridade          | `$y \sim x$`                          |$y \sim x$|
+|integral              | `$\int_{i}^{a}$`                      |$\int_{i}^{a}$|
+|infinito              | `$\infty$`                            |$\infty$|
+|fonte typewriter      | `$\tt{Letras}$`                       |$\tt{Letras}$|
+|fonte Calgary         | `$\mathcal{Letras}$`                  |$\mathcal{Letras}$|
+|três pontos verticais | `$\vdots$`                            |$\vdots$|
+|três pontos diagonais | `$\ddots$`                            |$\ddots$|
+|três pontos centrais  | `$\cdots$`                            |$\cdots$|
+|para - "flecha"       | `$0 \to \infty$`                      |$0 \to \infty$|
+|soma                  | `$\sum_{i=1}^{n}$`                    |$\sum_{i=1}^{n}$|
+|soma                  | `$\displaystyle \sum_{i=1}^{n}$`      |$\displaystyle \sum_{i=1}^{n}$|
+|produto               | `$\prod_{x=a}^{b}$`                   |$\prod_{x=a}^{b}$|
+|produto               | `$\displaystyle \prod_{x=a}^{b}$`     |$\displaystyle \prod_{x=a}^{b}$|
+|limite                | `$\lim_{x \to \infty}$`               |$\lim_{x \to \infty}$|
+|limite                | `$\displaystyle \lim_{x \to \infty}$` |$\displaystyle \lim_{x \to \infty}$|
+
+
+#### Letras gregas:
+
+|fonetico | codigo Rmarkdown    | minúscula, maiúscula|
+|:-------:|:-------------------:|:-------------------:|
+|alpha    | `$\alpha, A$`       | $\alpha, A$         |
+|beta     | `$\beta, B`         | $\beta, B$          |
+|gama     | `$\gamma, \Gamma$`  | $\gamma, \Gamma$    |
+|delta    | `$\delta, \Delta$`  | $\delta, \Delta$    |
+|epsilon  | `$\epsilon, E$`     | $\epsilon, E$       |
+|zeta     |`$\zeta,Z$`          | $\zeta, Z$          |
+|theta    |`$\theta, \Theta$`   | $\theta, \Theta$    |
+|iota     |`$\iota, I$`         | $\iota, I$          |
+|kappa    |`$\kappa, K$`        | $\kappa, K$         |
+|lambda   |`$\lambda,\Lambda$`  | $\lambda,\Lambda$   |
+|mu       |`$\mu, M$`           | $\mu, M$            |
+|nu       |`$\nu, N$`           | $\nu, N$            |
+|Xi       |`$\xi, \Xi$`         | $\xi, \Xi$          |
+|omicron  |`$\omicron, O$`      | $\omicron, O$       |
+|pi       |`$\pi, \Pi$`         | $\pi, \Pi$          |
+|rho      |`$\rho, P$`          | $\rho, P$           |
+|sigma    |`$\sigma, \Sigma$`   | $\sigma, \Sigma$    |
+|tau      |`$\tau, T$`          | $\tau, T$           |
+|upsilon  |`$\upsilon,\Upsilon$`| $\upsilon,\Upsilon$ |
+|phi      |`$\phi, \Phi$`       | $\phi, \Phi$        |
+|chi      |`$\chi, \Chi$`       | $\chi, X$           |
+|psi      |`$\psi, \Psi$`       | $\psi, \Psi$        |
+|omega    |`$\omega, \Omega$`   | $\omega, \Omega$    |
+
+
+### C. Chuncks
+
+*Insert > R*
+
+Ou uma sequência de três crases, chaves com a letra r (`{r}`) e outra sequência de três crases. 
+No intervalo entre `{r}` e as três, um  código R pode ser inserido e rodado. 
+
+Para finalizar: **Knit**.
